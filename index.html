@@ -11,9 +11,7 @@
   <meta name="author"         content="درآمد نو">
   <meta name="robots"         content="index, follow, max-image-preview:large">
   <link rel="canonical"       id="metaCanonical" href="https://mohamadalighane.github.io/daramad-noo/">
-<script>
-            !function(e,t,n){e.yektanetAnalyticsObject=n,e[n]=e[n]||function(){e[n].q.push(arguments)},e[n].q=e[n].q||[];var a=t.getElementsByTagName("head")[0],r=new Date,c="https://cdn.yektanet.com/superscript/YjPyWkx4/native-proai-eta.vercel.app-45688/yn_pub.js?v="+r.getFullYear().toString()+"0"+r.getMonth()+"0"+r.getDate()+"0"+r.getHours(),s=t.createElement("link");s.rel="preload",s.as="script",s.href=c,a.appendChild(s);var l=t.createElement("script");l.async=!0,l.src=c,a.appendChild(l)}(window,document,"yektanet");
-        </script>
+
   <!-- OPEN GRAPH -->
   <meta property="og:type"        id="ogType"   content="website">
   <meta property="og:url"         id="ogUrl"    content="https://mohamadalighane.github.io/daramad-noo/">
@@ -505,7 +503,7 @@
     </div>
   </div>
 </div>
-<div id="pos-article-display-116132"></div>
+
 <!-- 404 -->
 <div class="page" id="pg-404">
   <div class="p404">
@@ -593,8 +591,10 @@ function go(page, id) {
 
   if (page === 'home') {
     show('pg-home'); currentPage = 1; resetSEO(); loadArticles()
+    history.pushState(null, '', location.pathname)
   } else if (page === 'detail' && id) {
     show('pg-detail'); loadDetail(id)
+    history.pushState(null, '', '?article=' + id)
   } else if (page === 'admin') {
     if (!sbReady) { alert('⚠️ کلید Supabase را وارد کن'); return }
     sb.auth.getSession().then(({ data: { session } }) => {
@@ -731,6 +731,7 @@ async function loadDetail(id) {
   if (error || !a) { body.innerHTML = `<div style="text-align:center;padding:60px;color:var(--text3)"><div style="font-size:48px">😕</div><p style="margin-top:12px">مقاله یافت نشد</p></div>`; return }
   document.title = `${a.title} | درآمد نو`
   setArticleSEO(a)
+  updateShareLinks(a.id, a.title)
   const embed = ytEmbed(a.video_link)
   const videoHtml = a.video_link
     ? (embed ? `<div class="video-frame"><iframe src="${embed}" allowfullscreen loading="lazy"></iframe></div>`
@@ -745,6 +746,9 @@ async function loadDetail(id) {
     </div>
     <div class="detail-actions">
       <button class="btn btn-pdf" onclick="downloadPDF()">📄 دانلود PDF</button>
+      <button class="btn btn-ghost" onclick="copyArticleLink()" id="copyLinkBtn">🔗 کپی لینک</button>
+      <a class="btn btn-ghost" id="shareWhatsapp" href="" target="_blank" rel="noopener">📲 واتساپ</a>
+      <a class="btn btn-ghost" id="shareTelegram" href="" target="_blank" rel="noopener">✈️ تلگرام</a>
     </div>
     ${videoHtml}
     <div class="rich-content" id="articleContent">${processContent(a.full_content)}</div>`
@@ -1148,8 +1152,37 @@ function setArticleSEO(a) {
   })
 }
 
+// ── SHARE & DEEP LINK ────────────────────────────────────
+function copyArticleLink() {
+  const url = location.href
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('copyLinkBtn')
+    btn.textContent = '✅ کپی شد!'
+    setTimeout(() => btn.textContent = '🔗 کپی لینک', 2500)
+  })
+}
+
+function updateShareLinks(articleId, title) {
+  const url = encodeURIComponent(location.origin + location.pathname + '?article=' + articleId)
+  const text = encodeURIComponent(title + ' | درآمد نو')
+  const wa = document.getElementById('shareWhatsapp')
+  const tg = document.getElementById('shareTelegram')
+  if (wa) wa.href = `https://wa.me/?text=${text}%20${url}`
+  if (tg) tg.href = `https://t.me/share/url?url=${url}&text=${text}`
+}
+
+// ── DEEP LINK: open article directly from URL ─────────────
+function checkDeepLink() {
+  const params = new URLSearchParams(location.search)
+  const articleId = params.get('article')
+  if (articleId && sbReady) {
+    go('detail', articleId)
+  }
+}
+
 // ── START ─────────────────────────────────────────────────
-loadArticles()
+checkDeepLink()
+if (!new URLSearchParams(location.search).get('article')) loadArticles()
 </script>
 </body>
 </html>
