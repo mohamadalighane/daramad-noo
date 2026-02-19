@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mohamadalighane.github.io/daramad-noo/sitemap.xml
+
+# Block admin page from indexing
+Disallow: /?admin
