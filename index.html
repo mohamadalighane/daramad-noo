@@ -9,16 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script>
+<script>
             !function(e,t,n){e.yektanetAnalyticsObject=n,e[n]=e[n]||function(){e[n].q.push(arguments)},e[n].q=e[n].q||[];var a=t.getElementsByTagName("head")[0],r=new Date,c="https://cdn.yektanet.com/superscript/YjPyWkx4/native-proai-eta.vercel.app-45688/yn_pub.js?v="+r.getFullYear().toString()+"0"+r.getMonth()+"0"+r.getDate()+"0"+r.getHours(),s=t.createElement("link");s.rel="preload",s.as="script",s.href=c,a.appendChild(s);var l=t.createElement("script");l.async=!0,l.src=c,a.appendChild(l)}(window,document,"yektanet");
         </script>
-
   <style>
     :root {
       --bg:#f7f5f0; --surface:#fff; --surface2:#f0ede6; --border:#e8e4dc;
       --accent:#2d6a4f; --accent2:#40916c; --accent-light:#d8f3dc;
       --text:#1a1a18; --text2:#4a4a45; --text3:#8a8a82;
-      --gold:#b08d57; --red:#c0392b;
+      --gold:#b08d57; --red:#c0392b; --blue:#1e40af;
       --shadow:0 2px 20px rgba(0,0,0,.07);
       --shadow-lg:0 8px 40px rgba(0,0,0,.13);
       --r:14px; --r-sm:8px;
@@ -40,8 +39,8 @@
     .btn-danger:hover{opacity:.85}
     .btn-warn{background:var(--gold);color:#fff;padding:7px 14px;font-size:12px}
     .btn-warn:hover{opacity:.85}
-    .btn-pdf{background:#1e40af;color:#fff}
-    .btn-pdf:hover{background:#1d4ed8;transform:translateY(-1px)}
+    .btn-pdf{background:var(--blue);color:#fff}
+    .btn-pdf:hover{opacity:.9;transform:translateY(-1px)}
     .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
     .page{display:none}
     .page.active{display:block;animation:fadeUp .3s ease}
@@ -57,9 +56,15 @@
     .search-input::placeholder{color:var(--text3)}
     .search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:18px}
 
+    /* CATEGORY FILTER */
+    .cat-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+    .cat-chip{padding:6px 16px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface);font-family:'Vazirmatn',sans-serif;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s}
+    .cat-chip:hover{background:var(--surface2)}
+    .cat-chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
     /* GRID */
     .main{max-width:1200px;margin:0 auto;padding:40px 20px}
-    .sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+    .sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
     .sec-title{font-size:20px;font-weight:700}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
     .card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;cursor:pointer}
@@ -67,12 +72,12 @@
     .card-img{width:100%;height:200px;object-fit:cover;display:block}
     .card-ph{height:200px;background:linear-gradient(135deg,var(--accent-light),var(--surface2));display:flex;align-items:center;justify-content:center;font-size:48px}
     .card-body{padding:20px}
-    .card-date{font-size:11px;color:var(--text3);margin-bottom:8px}
+    .card-date{font-size:11px;color:var(--text3);margin-bottom:8px;display:flex;gap:8px;align-items:center}
     .card-title{font-size:17px;font-weight:700;margin-bottom:10px;line-height:1.5;color:var(--text)}
     .card-desc{color:var(--text2);font-size:13px;line-height:1.7;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
     .card-foot{display:flex;justify-content:space-between;align-items:center}
     .read-more{color:var(--accent);font-weight:600;font-size:13px}
-    .tag{background:var(--accent-light);color:var(--accent);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+    .badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:var(--accent-light);color:var(--accent)}
 
     /* PAGINATION */
     .pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:40px;flex-wrap:wrap}
@@ -82,7 +87,6 @@
     .pg-btn:disabled{opacity:.4;cursor:not-allowed}
     .pg-info{color:var(--text3);font-size:13px;padding:0 8px}
 
-    /* EMPTY/LOADING */
     .empty{text-align:center;padding:80px 20px;color:var(--text3);grid-column:1/-1}
     .empty .icon{font-size:56px;margin-bottom:14px}
     .empty h3{font-size:18px;font-weight:700;color:var(--text2);margin-bottom:6px}
@@ -93,12 +97,32 @@
     .back-btn:hover{background:var(--surface2)}
     .detail-img{width:100%;max-height:420px;object-fit:cover;border-radius:var(--r);margin-bottom:30px;box-shadow:var(--shadow)}
     .detail-title{font-size:clamp(22px,4vw,32px);font-weight:800;margin-bottom:12px;line-height:1.4}
-    .detail-meta{color:var(--text3);font-size:13px;margin-bottom:24px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+    .detail-meta{color:var(--text3);font-size:13px;margin-bottom:20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
     .detail-actions{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
-    .detail-content{color:var(--text2);line-height:1.9;font-size:15px;white-space:pre-wrap}
     .video-frame{width:100%;border-radius:var(--r);overflow:hidden;margin-bottom:28px;background:#000}
     .video-frame iframe{width:100%;height:360px;border:none;display:block}
     .video-link-btn{display:flex;align-items:center;gap:10px;padding:16px 20px;background:linear-gradient(135deg,#1a1a1a,#2d2d2d);color:#fff;text-decoration:none;border-radius:var(--r);margin-bottom:28px;font-size:14px;font-weight:600}
+
+    /* RICH CONTENT RENDER */
+    .rich-content{color:var(--text2);line-height:1.9;font-size:15px}
+    .rich-content h1{font-size:26px;font-weight:800;color:var(--text);margin:28px 0 12px}
+    .rich-content h2{font-size:21px;font-weight:700;color:var(--text);margin:24px 0 10px;padding-right:12px;border-right:4px solid var(--accent)}
+    .rich-content h3{font-size:17px;font-weight:700;color:var(--text);margin:20px 0 8px}
+    .rich-content p{margin-bottom:14px}
+    .rich-content strong{font-weight:700;color:var(--text)}
+    .rich-content em{font-style:italic;color:var(--text2)}
+    .rich-content u{text-decoration:underline}
+    .rich-content ul{padding-right:24px;margin-bottom:14px}
+    .rich-content ol{padding-right:24px;margin-bottom:14px}
+    .rich-content li{margin-bottom:6px}
+    .rich-content a{color:var(--accent);text-decoration:underline}
+    .rich-content blockquote{border-right:4px solid var(--gold);padding:12px 16px;margin:16px 0;background:var(--surface2);border-radius:0 var(--r-sm) var(--r-sm) 0;color:var(--text2);font-style:italic}
+    .rich-content .code-block{position:relative;margin:16px 0}
+    .rich-content pre{background:#1e1e2e;color:#cdd6f4;padding:20px;border-radius:var(--r-sm);overflow-x:auto;font-family:monospace;font-size:13px;line-height:1.6;direction:ltr;text-align:left}
+    .rich-content .copy-btn{position:absolute;top:8px;left:8px;background:rgba(255,255,255,.1);color:#cdd6f4;border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Vazirmatn',sans-serif;transition:background .2s}
+    .rich-content .copy-btn:hover{background:rgba(255,255,255,.2)}
+    .rich-content code{background:#f0ede6;color:var(--accent);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px}
+    .rich-content hr{border:none;border-top:2px solid var(--border);margin:24px 0}
 
     /* LOGIN */
     .login-page{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:20px}
@@ -110,9 +134,8 @@
     /* FORM */
     .f-group{margin-bottom:16px}
     .f-label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text2)}
-    .f-input,.f-textarea{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Vazirmatn',sans-serif;font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color .2s}
-    .f-input:focus,.f-textarea:focus{border-color:var(--accent)}
-    .f-textarea{min-height:160px;resize:vertical}
+    .f-input,.f-textarea,.f-select{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Vazirmatn',sans-serif;font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color .2s}
+    .f-input:focus,.f-textarea:focus,.f-select:focus{border-color:var(--accent)}
     .f-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     .f-full{grid-column:1/-1}
     .alert{padding:10px 14px;border-radius:var(--r-sm);font-size:13px;margin-bottom:14px;display:none;line-height:1.6}
@@ -120,18 +143,45 @@
     .alert-ok{background:#f0fdf4;border:1px solid #86efac;color:#166534}
 
     /* IMAGE UPLOAD */
-    .upload-area{border:2px dashed var(--border);border-radius:var(--r-sm);padding:24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2);position:relative}
-    .upload-area:hover,.upload-area.drag{border-color:var(--accent);background:var(--accent-light)}
+    .upload-area{border:2px dashed var(--border);border-radius:var(--r-sm);padding:24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2);position:relative;overflow:hidden}
+    .upload-area:hover{border-color:var(--accent);background:var(--accent-light)}
     .upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
     .upload-preview{width:100%;max-height:180px;object-fit:cover;border-radius:var(--r-sm);margin-top:12px;display:none}
-    .upload-progress{height:4px;background:var(--border);border-radius:2px;margin-top:10px;display:none}
-    .upload-progress-bar{height:100%;background:var(--accent);border-radius:2px;transition:width .3s;width:0%}
+    .upload-bar-wrap{height:4px;background:var(--border);border-radius:2px;margin-top:10px;display:none}
+    .upload-bar{height:100%;background:var(--accent);border-radius:2px;transition:width .3s;width:0%}
 
-    /* CATEGORY TABS */
-    .cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
-    .cat-tab{padding:7px 16px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface);font-family:'Vazirmatn',sans-serif;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s}
-    .cat-tab:hover{background:var(--surface2)}
-    .cat-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    /* CATEGORY MANAGER */
+    .cat-manager{background:var(--surface2);border-radius:var(--r-sm);padding:14px;margin-top:8px}
+    .cat-manager-title{font-size:12px;font-weight:700;color:var(--text3);margin-bottom:10px;text-transform:uppercase}
+    .cat-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+    .cat-tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600}
+    .cat-tag .del-cat{cursor:pointer;font-size:14px;line-height:1;color:var(--red);font-weight:800}
+    .cat-add-row{display:flex;gap:8px}
+    .cat-add-input{flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Vazirmatn',sans-serif;font-size:13px;outline:none;background:var(--surface)}
+    .cat-add-input:focus{border-color:var(--accent)}
+    .cat-add-btn{padding:8px 14px;background:var(--accent);color:#fff;border:none;border-radius:var(--r-sm);font-family:'Vazirmatn',sans-serif;font-size:13px;font-weight:600;cursor:pointer}
+    .cat-add-btn:hover{background:var(--accent2)}
+
+    /* RICH TEXT EDITOR */
+    .editor-wrap{border:1.5px solid var(--border);border-radius:var(--r-sm);overflow:hidden;background:var(--surface)}
+    .editor-wrap:focus-within{border-color:var(--accent)}
+    .editor-toolbar{display:flex;gap:2px;padding:8px 10px;background:var(--surface2);border-bottom:1px solid var(--border);flex-wrap:wrap}
+    .tb-btn{width:32px;height:32px;border:none;border-radius:6px;background:transparent;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all .2s;font-family:serif}
+    .tb-btn:hover{background:var(--border)}
+    .tb-btn.active{background:var(--accent);color:#fff}
+    .tb-sep{width:1px;background:var(--border);margin:4px 4px;align-self:stretch}
+    .tb-select{padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-family:'Vazirmatn',sans-serif;font-size:12px;background:var(--surface);color:var(--text);cursor:pointer;outline:none}
+    .editor-body{min-height:240px;padding:16px;outline:none;font-family:'Vazirmatn',sans-serif;font-size:14px;line-height:1.8;color:var(--text);direction:rtl}
+    .editor-body:empty::before{content:attr(data-placeholder);color:var(--text3);pointer-events:none}
+    .editor-body h1{font-size:22px;font-weight:800;margin:16px 0 8px}
+    .editor-body h2{font-size:18px;font-weight:700;margin:14px 0 6px;padding-right:10px;border-right:3px solid var(--accent)}
+    .editor-body h3{font-size:15px;font-weight:700;margin:12px 0 4px}
+    .editor-body blockquote{border-right:4px solid var(--gold);padding:10px 14px;background:var(--surface2);margin:12px 0;border-radius:0 var(--r-sm) var(--r-sm) 0}
+    .editor-body pre{background:#1e1e2e;color:#cdd6f4;padding:16px;border-radius:var(--r-sm);font-family:monospace;font-size:13px;direction:ltr;text-align:left;margin:12px 0;overflow-x:auto}
+    .editor-body code{background:#f0ede6;color:var(--accent);padding:1px 5px;border-radius:3px;font-family:monospace}
+    .editor-body ul,.editor-body ol{padding-right:24px;margin:8px 0}
+    .editor-body a{color:var(--accent);text-decoration:underline}
+    .editor-footer{padding:6px 12px;background:var(--surface2);border-top:1px solid var(--border);font-size:11px;color:var(--text3);display:flex;justify-content:space-between}
 
     /* ADMIN */
     .admin-wrap{max-width:1100px;margin:0 auto;padding:40px 20px}
@@ -152,24 +202,28 @@
     .toast.show{transform:translateX(-50%) translateY(0)}
     .toast.ok{background:var(--accent)}
     .toast.err{background:var(--red)}
-
     .spin{width:18px;height:18px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;display:inline-block;vertical-align:middle}
     @keyframes sp{to{transform:rotate(360deg)}}
+
+    /* LINK MODAL */
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center}
+    .modal-bg.open{display:flex}
+    .modal{background:var(--surface);border-radius:var(--r);padding:24px;width:100%;max-width:400px;box-shadow:var(--shadow-lg)}
+    .modal h3{font-size:16px;font-weight:700;margin-bottom:16px}
+    .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+
     footer{background:var(--text);color:rgba(255,255,255,.6);text-align:center;padding:24px;font-size:13px;margin-top:60px}
     .p404{text-align:center;padding:100px 20px}
     .p404 .num{font-size:120px;font-weight:800;color:var(--surface2);line-height:1}
-    .p404 h2{font-size:24px;font-weight:700;margin-bottom:10px}
-    .p404 p{color:var(--text3);margin-bottom:28px}
-    @media(max-width:640px){.f-grid{grid-template-columns:1fr}.list-item{flex-wrap:wrap}.hdr{padding:0 14px}.list-actions{width:100%}.detail-actions{flex-direction:column}}
+    @media(max-width:640px){.f-grid{grid-template-columns:1fr}.list-item{flex-wrap:wrap}.hdr{padding:0 14px}.list-actions{width:100%}.editor-toolbar{gap:1px}}
   </style>
 </head>
 <body>
 
-<!-- ⚙️ فقط این ۲ خط را عوض کن -->
 <script>
-  const SB_URL = 'https://tjztualnmoliusuoxpdx.supabase.co'
-  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqenR1YWxubW9saXVzdW94cGR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0MzIyNDksImV4cCI6MjA4NzAwODI0OX0.PSMSMyUpejqXs3SOv0jLB15SMobyh6PKWvQQz_VEsBw'
-  const PER_PAGE = 4  // تعداد مقاله در هر صفحه
+  const SB_URL  = 'https://tjztualnmoliusuoxpdx.supabase.co'
+  const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqenR1YWxubW9saXVzdW94cGR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0MzIyNDksImV4cCI6MjA4NzAwODI0OX0.PSMSMyUpejqXs3SOv0jLB15SMobyh6PKWvQQz_VEsBw'
+  const PER_PAGE = 6
 </script>
 
 <!-- HEADER -->
@@ -177,16 +231,32 @@
   <div class="hdr">
     <div class="logo" onclick="go('home')">
       <div class="logo-icon">💰</div>
-      <div>
-        <div class="logo-name">درآمد نو</div>
-        <div class="logo-sub">مقالات کسب درآمد</div>
-      </div>
+      <div><div class="logo-name">درآمد نو</div><div class="logo-sub">مقالات کسب درآمد</div></div>
     </div>
     <button class="btn btn-ghost" onclick="go('admin')">⚙ پنل ادمین</button>
   </div>
 </header>
 
 <div class="toast" id="toast"></div>
+
+<!-- LINK MODAL -->
+<div class="modal-bg" id="linkModal">
+  <div class="modal">
+    <h3>🔗 افزودن لینک</h3>
+    <div class="f-group">
+      <label class="f-label">متن لینک</label>
+      <input class="f-input" id="linkText" placeholder="متن نمایشی">
+    </div>
+    <div class="f-group">
+      <label class="f-label">آدرس URL</label>
+      <input class="f-input" id="linkUrl" placeholder="https://...">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">انصراف</button>
+      <button class="btn btn-primary" onclick="insertLink()">افزودن</button>
+    </div>
+  </div>
+</div>
 
 <!-- ===== HOME ===== -->
 <div class="page active" id="pg-home">
@@ -204,6 +274,7 @@
       <div class="sec-title">آخرین مقالات</div>
       <div id="artCount" style="color:var(--text3);font-size:13px"></div>
     </div>
+    <div class="cat-filter" id="catFilter"></div>
     <div class="grid" id="artGrid"></div>
     <div class="pagination" id="pagination"></div>
   </div>
@@ -262,10 +333,8 @@
       <div class="tab"    id="tab-form" onclick="switchTab('form')">➕ افزودن مقاله</div>
     </div>
 
-    <!-- LIST -->
     <div id="tabList"></div>
 
-    <!-- FORM -->
     <div id="tabForm" style="display:none">
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px">
         <h3 id="formHeading" style="font-weight:700;font-size:18px;margin-bottom:20px">➕ افزودن مقاله جدید</h3>
@@ -274,12 +343,13 @@
         <input type="hidden" id="editId">
 
         <div class="f-grid">
+          <!-- TITLE -->
           <div class="f-group f-full">
             <label class="f-label">عنوان مقاله <span style="color:var(--red)">*</span></label>
             <input class="f-input" id="fTitle" placeholder="عنوان مقاله را وارد کنید">
           </div>
 
-          <!-- IMAGE UPLOAD -->
+          <!-- IMAGE -->
           <div class="f-group f-full">
             <label class="f-label">تصویر مقاله</label>
             <div class="upload-area" id="uploadArea">
@@ -287,46 +357,100 @@
               <div id="uploadPlaceholder">
                 <div style="font-size:32px;margin-bottom:8px">🖼</div>
                 <div style="font-weight:600;font-size:14px;color:var(--text2)">عکس را اینجا بکش یا کلیک کن</div>
-                <div style="font-size:12px;color:var(--text3);margin-top:4px">JPG، PNG یا WebP — حداکثر ۵ مگابایت</div>
+                <div style="font-size:12px;color:var(--text3);margin-top:4px">JPG، PNG — حداکثر ۵ مگابایت</div>
               </div>
               <img id="uploadPreview" class="upload-preview">
-              <div class="upload-progress" id="uploadProgress">
-                <div class="upload-progress-bar" id="uploadProgressBar"></div>
-              </div>
+              <div class="upload-bar-wrap" id="uploadBarWrap"><div class="upload-bar" id="uploadBar"></div></div>
             </div>
             <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
-              <span style="font-size:12px;color:var(--text3)">یا لینک مستقیم:</span>
+              <span style="font-size:12px;color:var(--text3);white-space:nowrap">یا لینک:</span>
               <input class="f-input" id="fImageUrl" type="url" placeholder="https://example.com/image.jpg"
-                style="flex:1" oninput="onImageUrlInput(this.value)">
+                oninput="onImageUrlInput(this.value)">
             </div>
             <input type="hidden" id="fImageFinal">
           </div>
 
+          <!-- VIDEO -->
           <div class="f-group">
-            <label class="f-label">لینک ویدیو (اختیاری)</label>
+            <label class="f-label">لینک ویدیو</label>
             <input class="f-input" id="fVideo" type="url" placeholder="https://youtube.com/watch?v=...">
           </div>
+
+          <!-- CATEGORY -->
           <div class="f-group">
             <label class="f-label">دسته‌بندی</label>
-            <select class="f-input" id="fCat">
-              <option value="کسب درآمد">💰 کسب درآمد</option>
-              <option value="فریلنسری">💻 فریلنسری</option>
-              <option value="سرمایه‌گذاری">📈 سرمایه‌گذاری</option>
-              <option value="کارآفرینی">🚀 کارآفرینی</option>
-              <option value="بازاریابی">📣 بازاریابی</option>
-            </select>
+            <select class="f-select" id="fCat"></select>
+            <div class="cat-manager">
+              <div class="cat-manager-title">مدیریت دسته‌بندی‌ها</div>
+              <div class="cat-tags" id="catTagsAdmin"></div>
+              <div class="cat-add-row">
+                <input class="cat-add-input" id="newCatInput" placeholder="دسته جدید..."
+                  onkeydown="if(event.key==='Enter'){event.preventDefault();addCategory()}">
+                <button class="cat-add-btn" onclick="addCategory()">+ اضافه</button>
+              </div>
+            </div>
           </div>
+
+          <!-- SHORT DESC -->
           <div class="f-group f-full">
             <label class="f-label">توضیح کوتاه <span style="color:var(--red)">*</span></label>
             <input class="f-input" id="fShort" placeholder="یک جمله خلاصه از مقاله">
           </div>
+
+          <!-- RICH TEXT EDITOR -->
           <div class="f-group f-full">
             <label class="f-label">متن کامل مقاله <span style="color:var(--red)">*</span></label>
-            <textarea class="f-textarea" id="fContent" placeholder="متن کامل مقاله را اینجا بنویسید..."></textarea>
+            <div class="editor-wrap">
+              <div class="editor-toolbar" id="editorToolbar">
+                <!-- FORMAT -->
+                <select class="tb-select" onchange="execCmd('formatBlock',this.value);this.value='p'" title="سرتیتر">
+                  <option value="p">متن عادی</option>
+                  <option value="h1">عنوان ۱</option>
+                  <option value="h2">عنوان ۲</option>
+                  <option value="h3">عنوان ۳</option>
+                </select>
+                <div class="tb-sep"></div>
+                <!-- TEXT FORMAT -->
+                <button class="tb-btn" onclick="execCmd('bold')"         title="بولد"><b>B</b></button>
+                <button class="tb-btn" onclick="execCmd('italic')"       title="ایتالیک"><i>I</i></button>
+                <button class="tb-btn" onclick="execCmd('underline')"    title="خط زیر"><u>U</u></button>
+                <button class="tb-btn" onclick="execCmd('strikeThrough')" title="خط وسط"><s>S</s></button>
+                <div class="tb-sep"></div>
+                <!-- LISTS -->
+                <button class="tb-btn" onclick="execCmd('insertUnorderedList')" title="لیست نقطه‌ای">☰</button>
+                <button class="tb-btn" onclick="execCmd('insertOrderedList')"   title="لیست شماره‌ای">1.</button>
+                <div class="tb-sep"></div>
+                <!-- BLOCKS -->
+                <button class="tb-btn" onclick="insertBlockquote()" title="نقل‌قول">❝</button>
+                <button class="tb-btn" onclick="insertCode()"        title="کد">{ }</button>
+                <button class="tb-btn" onclick="insertCodeBlock()"   title="بلاک کد">📋</button>
+                <button class="tb-btn" onclick="insertHR()"          title="خط جداکننده">—</button>
+                <div class="tb-sep"></div>
+                <!-- LINK -->
+                <button class="tb-btn" onclick="openLinkModal()" title="لینک">🔗</button>
+                <button class="tb-btn" onclick="execCmd('unlink')" title="حذف لینک">🚫</button>
+                <div class="tb-sep"></div>
+                <!-- ALIGN -->
+                <button class="tb-btn" onclick="execCmd('justifyRight')"  title="راست">⇥</button>
+                <button class="tb-btn" onclick="execCmd('justifyCenter')" title="وسط">≡</button>
+                <button class="tb-btn" onclick="execCmd('justifyLeft')"   title="چپ">⇤</button>
+                <div class="tb-sep"></div>
+                <!-- UNDO/REDO -->
+                <button class="tb-btn" onclick="execCmd('undo')" title="واگرد">↩</button>
+                <button class="tb-btn" onclick="execCmd('redo')" title="انجام مجدد">↪</button>
+              </div>
+              <div class="editor-body" id="editorBody" contenteditable="true"
+                data-placeholder="متن مقاله را اینجا بنویسید... برای فرمت‌بندی از نوار بالا استفاده کنید"
+                oninput="updateWordCount()"></div>
+              <div class="editor-footer">
+                <span id="wordCount">۰ کلمه</span>
+                <span style="color:var(--text3)">Ctrl+B بولد | Ctrl+I ایتالیک | Ctrl+U خط‌زیر</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap">
+        <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
           <button class="btn btn-primary" id="saveBtn" onclick="saveArticle()">💾 ذخیره مقاله</button>
           <button class="btn btn-ghost" onclick="cancelEdit()">انصراف</button>
         </div>
@@ -340,13 +464,11 @@
 <div class="page" id="pg-404">
   <div class="p404">
     <div class="num">404</div>
-    <h2>صفحه یافت نشد</h2>
-    <p>صفحه‌ای که دنبالش بودید وجود ندارد.</p>
+    <h2 style="font-size:24px;font-weight:700;margin-bottom:10px">صفحه یافت نشد</h2>
+    <p style="color:var(--text3);margin-bottom:28px">صفحه‌ای که دنبالش بودید وجود ندارد.</p>
     <button class="btn btn-primary" onclick="go('home')">🏠 بازگشت</button>
   </div>
 </div>
-  
-  
 
 <footer><p>ساخته شده با ❤️ | درآمد نو &copy; ۱۴۰۳</p></footer>
 
@@ -359,12 +481,64 @@ const sbReady = (() => {
   catch { return false }
 })()
 
+// ── CATEGORIES (localStorage) ─────────────────────────────
+const DEFAULT_CATS = ['کسب درآمد','فریلنسری','سرمایه‌گذاری','کارآفرینی','بازاریابی','آموزش']
+const CAT_KEY = 'daramad_categories'
+
+function getCats() {
+  try { return JSON.parse(localStorage.getItem(CAT_KEY)) || DEFAULT_CATS }
+  catch { return DEFAULT_CATS }
+}
+
+function saveCats(cats) {
+  localStorage.setItem(CAT_KEY, JSON.stringify(cats))
+}
+
+function addCategory() {
+  const inp = document.getElementById('newCatInput')
+  const val = inp.value.trim()
+  if (!val) return
+  const cats = getCats()
+  if (cats.includes(val)) { toast('این دسته‌بندی قبلاً وجود دارد', 'err'); return }
+  cats.push(val)
+  saveCats(cats)
+  inp.value = ''
+  renderCatAdmin()
+  renderCatSelect()
+  toast('دسته‌بندی اضافه شد ✓', 'ok')
+}
+
+function deleteCategory(cat) {
+  if (!confirm(`دسته‌بندی "${cat}" حذف شود؟`)) return
+  const cats = getCats().filter(c => c !== cat)
+  saveCats(cats)
+  renderCatAdmin()
+  renderCatSelect()
+}
+
+function renderCatSelect() {
+  const sel = document.getElementById('fCat')
+  const cur = sel.value
+  sel.innerHTML = getCats().map(c => `<option value="${x(c)}">${x(c)}</option>`).join('')
+  if (cur) sel.value = cur
+}
+
+function renderCatAdmin() {
+  const el = document.getElementById('catTagsAdmin')
+  if (!el) return
+  el.innerHTML = getCats().map(c => `
+    <span class="cat-tag">${x(c)}
+      <span class="del-cat" onclick="deleteCategory('${x(c)}')" title="حذف">×</span>
+    </span>`).join('')
+}
+
 // ── STATE ─────────────────────────────────────────────────
 let currentPage = 1
 let totalCount  = 0
 let searchQuery = ''
-let allArticles = []
+let activeCat   = ''
 let uploadedImageUrl = ''
+let savedRange  = null
 
 // ── NAVIGATION ────────────────────────────────────────────
 function go(page, id) {
@@ -372,16 +546,13 @@ function go(page, id) {
   document.getElementById('hdr').style.display = page === 'login' ? 'none' : ''
 
   if (page === 'home') {
-    show('pg-home')
-    currentPage = 1
-    loadArticles()
+    show('pg-home'); currentPage = 1; loadArticles()
   } else if (page === 'detail' && id) {
-    show('pg-detail')
-    loadDetail(id)
+    show('pg-detail'); loadDetail(id)
   } else if (page === 'admin') {
     if (!sbReady) { alert('⚠️ کلید Supabase را وارد کن'); return }
     sb.auth.getSession().then(({ data: { session } }) => {
-      if (session) { show('pg-admin'); loadAdminList() }
+      if (session) { show('pg-admin'); loadAdminList(); renderCatSelect(); renderCatAdmin() }
       else show('pg-login')
     })
   } else if (page === 'login') {
@@ -400,47 +571,28 @@ async function doLogin() {
   const pass  = document.getElementById('loginPass').value
   const errEl = document.getElementById('loginErr')
   const btn   = document.getElementById('loginBtn')
-
   hide(errEl)
-  if (!email || !pass) { showAlert(errEl, 'ایمیل و رمز عبور را وارد کنید'); return }
-
+  if (!email || !pass) { showAlert(errEl,'ایمیل و رمز را وارد کنید'); return }
   btn.innerHTML = '<span class="spin"></span> در حال ورود...'
   btn.disabled = true
-
   const { error } = await sb.auth.signInWithPassword({ email, password: pass })
-
-  btn.innerHTML = 'ورود به سیستم'
-  btn.disabled = false
-
-  if (error) {
-    let msg = 'ایمیل یا رمز اشتباه است'
-    if (error.message.includes('not confirmed')) msg = 'ایمیل تأیید نشده — در Supabase تیک Auto Confirm را بزن'
-    showAlert(errEl, msg)
-    return
-  }
-
+  btn.innerHTML = 'ورود به سیستم'; btn.disabled = false
+  if (error) { showAlert(errEl, error.message.includes('not confirmed') ? 'ایمیل تأیید نشده' : 'ایمیل یا رمز اشتباه'); return }
   document.getElementById('hdr').style.display = ''
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
-  show('pg-admin')
-  loadAdminList()
-  toast('خوش آمدید ✓', 'ok')
+  show('pg-admin'); loadAdminList(); renderCatSelect(); renderCatAdmin()
+  toast('خوش آمدید ✓','ok')
 }
 
 async function doLogout() {
-  await sb.auth.signOut()
-  go('home')
-  toast('از سیستم خارج شدید', 'ok')
+  await sb.auth.signOut(); go('home'); toast('خارج شدید','ok')
 }
 
-// ── ARTICLES READ + PAGINATION ────────────────────────────
+// ── ARTICLES READ ─────────────────────────────────────────
 let searchTimer
 function onSearch(v) {
   clearTimeout(searchTimer)
-  searchTimer = setTimeout(() => {
-    searchQuery = v
-    currentPage = 1
-    loadArticles()
-  }, 300)
+  searchTimer = setTimeout(() => { searchQuery = v; currentPage = 1; loadArticles() }, 300)
 }
 
 async function loadArticles() {
@@ -449,306 +601,310 @@ async function loadArticles() {
   const pag  = document.getElementById('pagination')
 
   if (!sbReady) {
-    grid.innerHTML = `<div class="empty" style="grid-column:1/-1">
-      <div class="icon">⚙️</div><h3>کلید Supabase وارد نشده</h3>
-      <p>مقدار YOUR_ANON_KEY_HERE را در فایل HTML با کلید واقعی جایگزین کن</p>
-    </div>`
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="icon">⚙️</div><h3>کلید Supabase وارد نشده</h3></div>`
     return
   }
 
-  grid.innerHTML = spinning()
-  pag.innerHTML = ''
+  grid.innerHTML = spinning(); pag.innerHTML = ''
+  loadCatFilter()
 
   const from = (currentPage - 1) * PER_PAGE
   const to   = from + PER_PAGE - 1
 
-  let query = sb.from('articles').select('*', { count: 'exact' })
-    .order('created_at', { ascending: false })
-    .range(from, to)
+  let q = sb.from('articles').select('*', { count: 'exact' })
+    .order('created_at', { ascending: false }).range(from, to)
 
-  if (searchQuery.trim()) {
-    query = query.or(`title.ilike.%${searchQuery}%,short_description.ilike.%${searchQuery}%`)
-  }
+  if (searchQuery.trim()) q = q.or(`title.ilike.%${searchQuery}%,short_description.ilike.%${searchQuery}%`)
+  if (activeCat) q = q.eq('category', activeCat)
 
-  const { data, error, count } = await query
-
+  const { data, error, count } = await q
   if (error) { grid.innerHTML = errHtml(error.message); return }
 
   totalCount = count || 0
-  const totalPages = Math.ceil(totalCount / PER_PAGE)
-
   cnt.textContent = totalCount > 0 ? `${totalCount} مقاله` : ''
 
   if (!data || !data.length) {
-    grid.innerHTML = `<div class="empty">
-      <div class="icon">${searchQuery ? '🔍' : '📂'}</div>
-      <h3>${searchQuery ? 'مقاله‌ای یافت نشد' : 'هنوز مقاله‌ای نیست'}</h3>
-      <p>${searchQuery ? 'عبارت دیگری امتحان کنید' : 'از پنل ادمین مقاله اضافه کنید'}</p>
+    grid.innerHTML = `<div class="empty"><div class="icon">${searchQuery || activeCat ? '🔍' : '📂'}</div>
+      <h3>${searchQuery || activeCat ? 'مقاله‌ای یافت نشد' : 'هنوز مقاله‌ای نیست'}</h3>
+      <p>${searchQuery || activeCat ? 'فیلتر را تغییر دهید' : 'از پنل ادمین مقاله اضافه کنید'}</p>
     </div>`
     return
   }
 
   grid.innerHTML = data.map(a => `
     <div class="card" onclick="go('detail',${a.id})">
-      ${a.image
-        ? `<img class="card-img" src="${x(a.image)}" alt="${x(a.title)}" loading="lazy"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-        : ''}
+      ${a.image ? `<img class="card-img" src="${x(a.image)}" alt="${x(a.title)}" loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : ''}
       <div class="card-ph" ${a.image ? 'style="display:none"' : ''}>📄</div>
       <div class="card-body">
         <div class="card-date">
-          📅 ${fd(a.created_at)}
-          ${a.category ? `<span style="margin-right:8px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:10px;font-size:10px">${x(a.category)}</span>` : ''}
+          <span>📅 ${fd(a.created_at)}</span>
+          ${a.category ? `<span class="badge">${x(a.category)}</span>` : ''}
         </div>
         <div class="card-title">${x(a.title)}</div>
-        <div class="card-desc">${x(a.short_description)}</div>
-        <div class="card-foot">
-          <span class="read-more">مشاهده بیشتر ←</span>
-          <span class="tag">${x(a.category || 'کسب درآمد')}</span>
-        </div>
+        <div class="card-desc">${stripHtml(a.short_description)}</div>
+        <div class="card-foot"><span class="read-more">مشاهده بیشتر ←</span></div>
       </div>
     </div>`).join('')
 
-  // PAGINATION
-  if (totalPages > 1) {
-    renderPagination(currentPage, totalPages)
-  }
+  if (Math.ceil(totalCount / PER_PAGE) > 1) renderPagination(currentPage, Math.ceil(totalCount / PER_PAGE))
+}
+
+async function loadCatFilter() {
+  const el = document.getElementById('catFilter')
+  const { data } = await sb.from('articles').select('category').not('category','is',null)
+  if (!data) return
+  const cats = [...new Set(data.map(r => r.category).filter(Boolean))]
+  el.innerHTML = `<button class="cat-chip ${!activeCat?'active':''}" onclick="filterCat('')">همه</button>`
+    + cats.map(c => `<button class="cat-chip ${activeCat===c?'active':''}" onclick="filterCat('${x(c)}')">${x(c)}</button>`).join('')
+}
+
+function filterCat(cat) {
+  activeCat = cat; currentPage = 1; loadArticles()
 }
 
 function renderPagination(cur, total) {
   const pag = document.getElementById('pagination')
-  let html = ''
-
-  html += `<button class="pg-btn" onclick="goPage(${cur-1})" ${cur===1?'disabled':''}>›</button>`
-
+  let html = `<button class="pg-btn" onclick="goPage(${cur-1})" ${cur===1?'disabled':''}>›</button>`
   for (let i = 1; i <= total; i++) {
-    if (
-      i === 1 || i === total ||
-      (i >= cur - 2 && i <= cur + 2)
-    ) {
-      html += `<button class="pg-btn ${i===cur?'active':''}" onclick="goPage(${i})">${i}</button>`
-    } else if (i === cur - 3 || i === cur + 3) {
-      html += `<span class="pg-info">...</span>`
-    }
+    if (i===1||i===total||(i>=cur-2&&i<=cur+2)) html += `<button class="pg-btn ${i===cur?'active':''}" onclick="goPage(${i})">${i}</button>`
+    else if (i===cur-3||i===cur+3) html += `<span class="pg-info">...</span>`
   }
-
   html += `<button class="pg-btn" onclick="goPage(${cur+1})" ${cur===total?'disabled':''}>‹</button>`
   html += `<span class="pg-info">${cur} از ${total}</span>`
-
   pag.innerHTML = html
 }
 
-function goPage(p) {
-  currentPage = p
-  loadArticles()
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
+function goPage(p) { currentPage = p; loadArticles(); window.scrollTo({top:0,behavior:'smooth'}) }
 
 // ── DETAIL + PDF ──────────────────────────────────────────
 async function loadDetail(id) {
   const body = document.getElementById('detailBody')
   body.innerHTML = spinning(true)
-
   const { data: a, error } = await sb.from('articles').select('*').eq('id', id).single()
-  if (error || !a) {
-    body.innerHTML = `<div style="text-align:center;padding:60px;color:var(--text3)"><div style="font-size:48px">😕</div><p style="margin-top:12px">مقاله یافت نشد</p></div>`
-    return
-  }
-
+  if (error || !a) { body.innerHTML = `<div style="text-align:center;padding:60px;color:var(--text3)"><div style="font-size:48px">😕</div><p style="margin-top:12px">مقاله یافت نشد</p></div>`; return }
   document.title = `${a.title} | درآمد نو`
-
   const embed = ytEmbed(a.video_link)
   const videoHtml = a.video_link
-    ? (embed
-        ? `<div class="video-frame"><iframe src="${embed}" allowfullscreen loading="lazy"></iframe></div>`
-        : `<a class="video-link-btn" href="${x(a.video_link)}" target="_blank" rel="noopener">▶ مشاهده ویدیو</a>`)
+    ? (embed ? `<div class="video-frame"><iframe src="${embed}" allowfullscreen loading="lazy"></iframe></div>`
+             : `<a class="video-link-btn" href="${x(a.video_link)}" target="_blank" rel="noopener">▶ مشاهده ویدیو</a>`)
     : ''
-
   body.innerHTML = `
     ${a.image ? `<img class="detail-img" src="${x(a.image)}" alt="${x(a.title)}" loading="lazy">` : ''}
     <h1 class="detail-title">${x(a.title)}</h1>
     <div class="detail-meta">
       <span>📅 ${fd(a.created_at)}</span>
-      <span>🏷 ${x(a.category || 'کسب درآمد')}</span>
+      ${a.category ? `<span class="badge">${x(a.category)}</span>` : ''}
     </div>
     <div class="detail-actions">
-      <button class="btn btn-pdf" onclick="downloadPDF(${a.id})">📄 دانلود PDF</button>
+      <button class="btn btn-pdf" onclick="downloadPDF()">📄 دانلود PDF</button>
     </div>
     ${videoHtml}
-    <div class="detail-content" id="articleContent">${x(a.full_content)}</div>
-  `
-
-  // Store for PDF
+    <div class="rich-content" id="articleContent">${processContent(a.full_content)}</div>`
   window._currentArticle = a
+  // Add copy buttons to code blocks
+  setTimeout(() => {
+    document.querySelectorAll('#articleContent pre').forEach(pre => {
+      const wrap = document.createElement('div')
+      wrap.className = 'code-block'
+      pre.parentNode.insertBefore(wrap, pre)
+      wrap.appendChild(pre)
+      const btn = document.createElement('button')
+      btn.className = 'copy-btn'
+      btn.textContent = '📋 کپی'
+      btn.onclick = () => {
+        navigator.clipboard.writeText(pre.textContent)
+        btn.textContent = '✅ کپی شد'
+        setTimeout(() => btn.textContent = '📋 کپی', 2000)
+      }
+      wrap.appendChild(btn)
+    })
+  }, 100)
 }
 
-async function downloadPDF(id) {
+function processContent(html) {
+  if (!html) return ''
+  // If it's plain text (no HTML tags), convert newlines
+  if (!/<[a-z][\s\S]*>/i.test(html)) {
+    return html.split('\n').map(l => l.trim() ? `<p>${x(l)}</p>` : '<br>').join('')
+  }
+  return html
+}
+
+async function downloadPDF() {
   const a = window._currentArticle
   if (!a) return
-
-  toast('در حال ساخت PDF...', '')
-
+  toast('در حال ساخت PDF...','')
   try {
     const { jsPDF } = window.jspdf
-    const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' })
+    const doc = new jsPDF({ orientation:'p', unit:'mm', format:'a4' })
+    const pw = doc.internal.pageSize.getWidth()
+    const ph = doc.internal.pageSize.getHeight()
+    const m = 20, maxW = pw - m*2
+    let y = m
 
-    const pageW  = doc.internal.pageSize.getWidth()
-    const pageH  = doc.internal.pageSize.getHeight()
-    const margin = 20
-    const maxW   = pageW - margin * 2
-    let y = margin
-
-    // Header bar
-    doc.setFillColor(45, 106, 79)
-    doc.rect(0, 0, pageW, 18, 'F')
-    doc.setTextColor(255, 255, 255)
-    doc.setFontSize(10)
-    doc.text('daramad-noo.github.io', margin, 12)
-    doc.text(fd(a.created_at), pageW - margin, 12, { align: 'right' })
-
+    doc.setFillColor(45,106,79); doc.rect(0,0,pw,18,'F')
+    doc.setTextColor(255,255,255); doc.setFontSize(9)
+    doc.text('daramad-noo | درآمد نو', m, 12)
+    doc.text(fd(a.created_at), pw-m, 12, {align:'right'})
     y = 30
 
-    // Title
-    doc.setTextColor(26, 26, 24)
-    doc.setFontSize(18)
-    doc.setFont('helvetica', 'bold')
-    const titleLines = doc.splitTextToSize(a.title, maxW)
-    doc.text(titleLines, pageW - margin, y, { align: 'right' })
-    y += titleLines.length * 8 + 6
+    doc.setTextColor(26,26,24); doc.setFontSize(16); doc.setFont('helvetica','bold')
+    const tLines = doc.splitTextToSize(a.title, maxW)
+    doc.text(tLines, pw-m, y, {align:'right'}); y += tLines.length * 7 + 5
 
-    // Divider
-    doc.setDrawColor(45, 106, 79)
-    doc.setLineWidth(0.5)
-    doc.line(margin, y, pageW - margin, y)
-    y += 8
+    doc.setDrawColor(45,106,79); doc.setLineWidth(0.4); doc.line(m,y,pw-m,y); y += 7
 
-    // Category + Date
-    doc.setFontSize(10)
-    doc.setFont('helvetica', 'normal')
-    doc.setTextColor(138, 138, 130)
-    doc.text(`Category: ${a.category || 'کسب درآمد'}   |   Date: ${fd(a.created_at)}`, pageW - margin, y, { align: 'right' })
-    y += 12
+    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(138,138,130)
+    doc.text(`${a.category||'کسب درآمد'}  ·  ${fd(a.created_at)}`, pw-m, y, {align:'right'}); y += 10
 
-    // Short description box
-    doc.setFillColor(240, 237, 230)
-    doc.roundedRect(margin, y, maxW, 14, 2, 2, 'F')
-    doc.setFontSize(11)
-    doc.setTextColor(74, 74, 69)
-    doc.setFont('helvetica', 'italic')
-    const shortLines = doc.splitTextToSize(a.short_description, maxW - 8)
-    doc.text(shortLines, pageW - margin - 4, y + 9, { align: 'right' })
-    y += 20
-
-    // Content
-    doc.setFont('helvetica', 'normal')
-    doc.setFontSize(11)
-    doc.setTextColor(74, 74, 69)
-
-    const contentLines = doc.splitTextToSize(a.full_content, maxW)
-    for (const line of contentLines) {
-      if (y + 7 > pageH - 20) {
-        doc.addPage()
-        y = margin
-      }
-      doc.text(line, pageW - margin, y, { align: 'right' })
-      y += 7
+    if (a.short_description) {
+      doc.setFillColor(240,237,230); doc.roundedRect(m,y,maxW,12,2,2,'F')
+      doc.setFontSize(10); doc.setTextColor(74,74,69)
+      doc.text(doc.splitTextToSize(a.short_description, maxW-6), pw-m-3, y+8, {align:'right'}); y += 18
     }
 
-    // Footer
-    const totalPages = doc.internal.getNumberOfPages()
-    for (let i = 1; i <= totalPages; i++) {
+    const plainText = stripHtml(a.full_content || '')
+    doc.setFontSize(11); doc.setTextColor(74,74,69)
+    const lines = doc.splitTextToSize(plainText, maxW)
+    for (const line of lines) {
+      if (y + 7 > ph - 16) { doc.addPage(); y = m }
+      doc.text(line, pw-m, y, {align:'right'}); y += 7
+    }
+
+    const total = doc.internal.getNumberOfPages()
+    for (let i=1;i<=total;i++) {
       doc.setPage(i)
-      doc.setFillColor(247, 245, 240)
-      doc.rect(0, pageH - 12, pageW, 12, 'F')
-      doc.setFontSize(9)
-      doc.setTextColor(138, 138, 130)
-      doc.text(`درآمد نو | ${a.title}`, margin, pageH - 4)
-      doc.text(`${i} / ${totalPages}`, pageW - margin, pageH - 4, { align: 'right' })
+      doc.setFillColor(247,245,240); doc.rect(0,ph-10,pw,10,'F')
+      doc.setFontSize(8); doc.setTextColor(138,138,130)
+      doc.text('درآمد نو', m, ph-3)
+      doc.text(`${i}/${total}`, pw-m, ph-3, {align:'right'})
     }
-
     doc.save(`${a.title}.pdf`)
-    toast('PDF دانلود شد ✓', 'ok')
-  } catch(e) {
-    toast('خطا در ساخت PDF', 'err')
-    console.error(e)
-  }
+    toast('PDF دانلود شد ✓','ok')
+  } catch(e) { toast('خطا در ساخت PDF','err'); console.error(e) }
 }
 
 // ── IMAGE UPLOAD ──────────────────────────────────────────
 async function handleImageFile(input) {
   const file = input.files[0]
   if (!file) return
+  if (file.size > 5*1024*1024) { toast('حجم عکس بیشتر از ۵ مگابایت','err'); return }
 
-  if (file.size > 5 * 1024 * 1024) {
-    toast('حجم عکس بیشتر از ۵ مگابایت است', 'err'); return
-  }
-
-  // Show preview
   const reader = new FileReader()
   reader.onload = e => {
-    const prev = document.getElementById('uploadPreview')
-    prev.src = e.target.result
-    prev.style.display = 'block'
+    const p = document.getElementById('uploadPreview')
+    p.src = e.target.result; p.style.display = 'block'
     document.getElementById('uploadPlaceholder').style.display = 'none'
   }
   reader.readAsDataURL(file)
 
-  // Upload to Supabase Storage
   const { data: { session } } = await sb.auth.getSession()
-  if (!session) {
-    toast('برای آپلود عکس باید لاگین کنی', 'err'); return
-  }
+  if (!session) { toast('برای آپلود باید لاگین باشی','err'); return }
 
-  const progress = document.getElementById('uploadProgress')
-  const bar      = document.getElementById('uploadProgressBar')
-  progress.style.display = 'block'
-  bar.style.width = '30%'
+  const bar = document.getElementById('uploadBar')
+  const barWrap = document.getElementById('uploadBarWrap')
+  barWrap.style.display = 'block'; bar.style.width = '40%'
 
-  const ext      = file.name.split('.').pop()
+  const ext = file.name.split('.').pop()
   const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+  bar.style.width = '70%'
 
-  bar.style.width = '60%'
-
-  const { data, error } = await sb.storage
-    .from('article-images')
-    .upload(fileName, file, { cacheControl: '3600', upsert: false })
-
+  const { data, error } = await sb.storage.from('article-images').upload(fileName, file, { cacheControl:'3600' })
   bar.style.width = '100%'
 
-  if (error) {
-    toast('خطا در آپلود: ' + error.message, 'err')
-    progress.style.display = 'none'
-    return
-  }
+  if (error) { toast('خطا در آپلود: '+error.message,'err'); barWrap.style.display='none'; return }
 
   const { data: urlData } = sb.storage.from('article-images').getPublicUrl(fileName)
   uploadedImageUrl = urlData.publicUrl
   document.getElementById('fImageFinal').value = uploadedImageUrl
-  document.getElementById('fImageUrl').value   = ''
-
-  setTimeout(() => { progress.style.display = 'none'; bar.style.width = '0%' }, 800)
-  toast('عکس آپلود شد ✓', 'ok')
+  document.getElementById('fImageUrl').value = ''
+  setTimeout(() => { barWrap.style.display='none'; bar.style.width='0%' }, 600)
+  toast('عکس آپلود شد ✓','ok')
 }
 
 function onImageUrlInput(val) {
   if (val) {
     uploadedImageUrl = ''
     document.getElementById('fImageFinal').value = val
-    const prev = document.getElementById('uploadPreview')
-    prev.src = val
-    prev.style.display = 'block'
+    const p = document.getElementById('uploadPreview')
+    p.src = val; p.style.display = 'block'
     document.getElementById('uploadPlaceholder').style.display = 'none'
   }
+}
+
+// ── RICH TEXT EDITOR ──────────────────────────────────────
+function execCmd(cmd, val = null) {
+  document.getElementById('editorBody').focus()
+  document.execCommand(cmd, false, val)
+  updateWordCount()
+}
+
+function insertBlockquote() {
+  const sel = window.getSelection()
+  const text = sel?.toString() || 'نقل‌قول را اینجا بنویسید'
+  document.execCommand('insertHTML', false, `<blockquote>${text}</blockquote><p><br></p>`)
+}
+
+function insertCode() {
+  const sel = window.getSelection()
+  const text = sel?.toString() || 'کد'
+  document.execCommand('insertHTML', false, `<code>${text}</code>`)
+}
+
+function insertCodeBlock() {
+  document.execCommand('insertHTML', false,
+    `<pre>// کد خود را اینجا بنویسید\nconsole.log('Hello World')</pre><p><br></p>`)
+}
+
+function insertHR() {
+  document.execCommand('insertHTML', false, '<hr><p><br></p>')
+}
+
+function openLinkModal() {
+  const sel = window.getSelection()
+  if (sel && sel.rangeCount > 0) savedRange = sel.getRangeAt(0).cloneRange()
+  document.getElementById('linkText').value = sel?.toString() || ''
+  document.getElementById('linkUrl').value = ''
+  document.getElementById('linkModal').classList.add('open')
+}
+
+function closeModal() {
+  document.getElementById('linkModal').classList.remove('open')
+}
+
+function insertLink() {
+  const text = document.getElementById('linkText').value.trim()
+  const url  = document.getElementById('linkUrl').value.trim()
+  if (!url) { toast('آدرس لینک را وارد کن','err'); return }
+
+  const editor = document.getElementById('editorBody')
+  editor.focus()
+
+  if (savedRange) {
+    const sel = window.getSelection()
+    sel.removeAllRanges()
+    sel.addRange(savedRange)
+  }
+
+  document.execCommand('insertHTML', false,
+    `<a href="${x(url)}" target="_blank" rel="noopener">${x(text || url)}</a>`)
+  closeModal()
+  savedRange = null
+}
+
+function updateWordCount() {
+  const text = document.getElementById('editorBody').innerText || ''
+  const words = text.trim().split(/\s+/).filter(w => w.length > 0).length
+  document.getElementById('wordCount').textContent = `${words} کلمه`
 }
 
 // ── ADMIN CRUD ────────────────────────────────────────────
 async function loadAdminList() {
   const el = document.getElementById('tabList')
   el.innerHTML = spinning(true)
-
-  const { data, error } = await sb.from('articles').select('*').order('created_at', { ascending: false })
+  const { data, error } = await sb.from('articles').select('*').order('created_at',{ascending:false})
   if (error) { el.innerHTML = errHtml(error.message); return }
-
   if (!data.length) {
     el.innerHTML = `<div style="text-align:center;padding:60px;color:var(--text3)">
       <div style="font-size:48px;margin-bottom:12px">📂</div>
@@ -757,7 +913,6 @@ async function loadAdminList() {
     </div>`
     return
   }
-
   el.innerHTML = data.map(a => `
     <div class="list-item">
       <div class="list-thumb">
@@ -765,39 +920,36 @@ async function loadAdminList() {
       </div>
       <div class="list-info">
         <div class="list-title">${x(a.title)}</div>
-        <div class="list-date">📅 ${fd(a.created_at)} ${a.category ? '· '+x(a.category) : ''}</div>
+        <div class="list-date">📅 ${fd(a.created_at)} ${a.category?'· '+x(a.category):''}</div>
       </div>
       <div class="list-actions">
         <button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="go('detail',${a.id})">👁</button>
-        <button class="btn btn-warn"  onclick="editArticle(${a.id})">✏ ویرایش</button>
+        <button class="btn btn-warn" onclick="editArticle(${a.id})">✏ ویرایش</button>
         <button class="btn btn-danger" onclick="deleteArticle(${a.id})">🗑 حذف</button>
       </div>
     </div>`).join('')
 }
 
 async function editArticle(id) {
-  const { data: a } = await sb.from('articles').select('*').eq('id', id).single()
+  const { data: a } = await sb.from('articles').select('*').eq('id',id).single()
   if (!a) return
-
-  document.getElementById('editId').value   = a.id
-  document.getElementById('fTitle').value   = a.title
+  document.getElementById('editId').value = a.id
+  document.getElementById('fTitle').value = a.title
   document.getElementById('fImageUrl').value = a.image || ''
   document.getElementById('fImageFinal').value = a.image || ''
-  document.getElementById('fVideo').value   = a.video_link || ''
-  document.getElementById('fShort').value   = a.short_description
-  document.getElementById('fContent').value = a.full_content
-  document.getElementById('fCat').value     = a.category || 'کسب درآمد'
+  document.getElementById('fVideo').value = a.video_link || ''
+  document.getElementById('fShort').value = a.short_description
+  document.getElementById('editorBody').innerHTML = a.full_content || ''
+  document.getElementById('fCat').value = a.category || getCats()[0]
   document.getElementById('formHeading').textContent = '✏ ویرایش مقاله'
-
   if (a.image) {
-    const prev = document.getElementById('uploadPreview')
-    prev.src = a.image
-    prev.style.display = 'block'
+    const p = document.getElementById('uploadPreview')
+    p.src = a.image; p.style.display = 'block'
     document.getElementById('uploadPlaceholder').style.display = 'none'
   }
-
+  updateWordCount()
   switchTab('form')
-  window.scrollTo(0, 0)
+  window.scrollTo(0,0)
 }
 
 async function saveArticle() {
@@ -805,7 +957,7 @@ async function saveArticle() {
   const image   = document.getElementById('fImageFinal').value.trim() || document.getElementById('fImageUrl').value.trim()
   const video   = document.getElementById('fVideo').value.trim()
   const short   = document.getElementById('fShort').value.trim()
-  const content = document.getElementById('fContent').value.trim()
+  const content = document.getElementById('editorBody').innerHTML.trim()
   const cat     = document.getElementById('fCat').value
   const editId  = document.getElementById('editId').value
   const errEl   = document.getElementById('formErr')
@@ -813,67 +965,61 @@ async function saveArticle() {
   const btn     = document.getElementById('saveBtn')
 
   hide(errEl); hide(okEl)
-  if (!title)   { showAlert(errEl, '⚠️ عنوان مقاله را وارد کنید'); return }
-  if (!short)   { showAlert(errEl, '⚠️ توضیح کوتاه را وارد کنید'); return }
-  if (!content) { showAlert(errEl, '⚠️ متن کامل مقاله را وارد کنید'); return }
+  if (!title)   { showAlert(errEl,'⚠️ عنوان مقاله را وارد کنید'); return }
+  if (!short)   { showAlert(errEl,'⚠️ توضیح کوتاه را وارد کنید'); return }
+  if (!content || content === '<br>') { showAlert(errEl,'⚠️ متن مقاله را وارد کنید'); return }
 
   btn.innerHTML = '<span class="spin"></span> در حال ذخیره...'
   btn.disabled = true
 
-  const payload = { title, image, video_link: video, short_description: short, full_content: content, category: cat }
-
+  const payload = { title, image, video_link:video, short_description:short, full_content:content, category:cat }
   const { error } = editId
-    ? await sb.from('articles').update(payload).eq('id', editId)
+    ? await sb.from('articles').update(payload).eq('id',editId)
     : await sb.from('articles').insert([payload])
 
-  btn.innerHTML = '💾 ذخیره مقاله'
-  btn.disabled = false
+  btn.innerHTML = '💾 ذخیره مقاله'; btn.disabled = false
 
   if (error) {
-    let msg = `خطا: ${error.message}`
-    if (error.message.includes('policy') || error.code === '42501') msg = '⚠️ دسترسی رد شد — مطمئن شو که لاگین هستی'
-    if (error.message.includes('does not exist')) msg = '⚠️ ستون category وجود ندارد — SQL پایین را اجرا کن'
-    showAlert(errEl, msg)
-    return
+    let msg = 'خطا: ' + error.message
+    if (error.message.includes('policy')) msg = '⚠️ دسترسی رد شد — مطمئن شو که لاگین هستی'
+    showAlert(errEl, msg); return
   }
 
   showAlert(okEl, editId ? '✅ مقاله ویرایش شد' : '✅ مقاله با موفقیت اضافه شد')
-  toast(editId ? 'مقاله ویرایش شد ✓' : 'مقاله اضافه شد ✓', 'ok')
+  toast(editId ? 'مقاله ویرایش شد ✓' : 'مقاله اضافه شد ✓','ok')
   setTimeout(() => { cancelEdit(); loadAdminList() }, 900)
 }
 
 async function deleteArticle(id) {
-  if (!confirm('آیا مطمئن هستید؟ این مقاله حذف خواهد شد.')) return
-  const { error } = await sb.from('articles').delete().eq('id', id)
-  if (error) { toast('خطا: ' + error.message, 'err'); return }
-  toast('مقاله حذف شد', 'ok')
-  loadAdminList()
+  if (!confirm('آیا مطمئن هستید؟')) return
+  const { error } = await sb.from('articles').delete().eq('id',id)
+  if (error) { toast('خطا: '+error.message,'err'); return }
+  toast('مقاله حذف شد','ok'); loadAdminList()
 }
 
 function switchTab(t) {
-  document.getElementById('tab-list').classList.toggle('on', t === 'list')
-  document.getElementById('tab-form').classList.toggle('on', t === 'form')
-  document.getElementById('tabList').style.display = t === 'list' ? '' : 'none'
-  document.getElementById('tabForm').style.display = t === 'form' ? '' : 'none'
+  document.getElementById('tab-list').classList.toggle('on',t==='list')
+  document.getElementById('tab-form').classList.toggle('on',t==='form')
+  document.getElementById('tabList').style.display = t==='list' ? '' : 'none'
+  document.getElementById('tabForm').style.display = t==='form' ? '' : 'none'
 }
 
 function cancelEdit() {
-  ['editId','fTitle','fImageUrl','fImageFinal','fVideo','fShort','fContent'].forEach(id => {
-    document.getElementById(id).value = ''
-  })
-  document.getElementById('fCat').value = 'کسب درآمد'
+  ['editId','fTitle','fImageUrl','fImageFinal','fVideo','fShort'].forEach(id => document.getElementById(id).value='')
+  document.getElementById('editorBody').innerHTML = ''
+  document.getElementById('fCat').value = getCats()[0] || ''
   document.getElementById('formHeading').textContent = '➕ افزودن مقاله جدید'
   document.getElementById('uploadPreview').style.display = 'none'
   document.getElementById('uploadPlaceholder').style.display = 'block'
   document.getElementById('fImageFile').value = ''
-  uploadedImageUrl = ''
-  hide(document.getElementById('formErr'))
-  hide(document.getElementById('formOk'))
+  uploadedImageUrl = ''; updateWordCount()
+  hide(document.getElementById('formErr')); hide(document.getElementById('formOk'))
   switchTab('list')
 }
 
 // ── HELPERS ───────────────────────────────────────────────
 function x(s=''){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function stripHtml(s=''){return s.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim()}
 function fd(iso){try{return new Date(iso).toLocaleDateString('fa-IR')}catch{return ''}}
 function ytEmbed(url){if(!url)return null;if(url.includes('youtube.com/embed/'))return url;const m=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);return m?`https://www.youtube.com/embed/${m[1]}`:null}
 function showAlert(el,msg){el.textContent=msg;el.style.display='block'}
