@@ -1,13 +1,17 @@
+
+Index · HTML
+Copy
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="مقالات کسب درآمد - راهنمای جامع برای درآمدزایی آنلاین">
-  <meta name="keywords" content="کسب درآمد, درآمد آنلاین, کارآفرینی, فریلنسر">
   <title>درآمد نو | مقالات کسب درآمد</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     :root {
@@ -23,11 +27,11 @@
     body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.7}
     header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
     .hdr{max-width:1200px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between}
-    .logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+    .logo{display:flex;align-items:center;gap:10px;cursor:pointer}
     .logo-icon{width:38px;height:38px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
     .logo-name{font-weight:800;font-size:18px;color:var(--text)}
     .logo-sub{font-size:11px;color:var(--text3)}
-    .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--r-sm);font-family:'Vazirmatn',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;text-decoration:none}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--r-sm);font-family:'Vazirmatn',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
     .btn-primary{background:var(--accent);color:#fff}
     .btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 4px 14px rgba(45,106,79,.3)}
     .btn-ghost{background:transparent;color:var(--text2);border:1.5px solid var(--border)}
@@ -36,10 +40,14 @@
     .btn-danger:hover{opacity:.85}
     .btn-warn{background:var(--gold);color:#fff;padding:7px 14px;font-size:12px}
     .btn-warn:hover{opacity:.85}
+    .btn-pdf{background:#1e40af;color:#fff}
+    .btn-pdf:hover{background:#1d4ed8;transform:translateY(-1px)}
     .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
     .page{display:none}
     .page.active{display:block;animation:fadeUp .3s ease}
     @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    /* HERO */
     .hero{background:linear-gradient(135deg,#2d6a4f,#1b4332);color:#fff;padding:64px 20px;text-align:center;position:relative;overflow:hidden}
     .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(255,255,255,.06),transparent 60%)}
     .hero h1{font-size:clamp(24px,5vw,40px);font-weight:800;margin-bottom:10px;position:relative}
@@ -48,13 +56,15 @@
     .search-input{width:100%;padding:15px 50px 15px 20px;border-radius:50px;border:none;font-family:'Vazirmatn',sans-serif;font-size:15px;background:#fff;color:var(--text);box-shadow:0 4px 30px rgba(0,0,0,.2);outline:none}
     .search-input::placeholder{color:var(--text3)}
     .search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:18px}
+
+    /* GRID */
     .main{max-width:1200px;margin:0 auto;padding:40px 20px}
     .sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
     .sec-title{font-size:20px;font-weight:700}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
     .card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;cursor:pointer}
     .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-    .card-img{width:100%;height:200px;object-fit:cover;display:block;background:var(--surface2)}
+    .card-img{width:100%;height:200px;object-fit:cover;display:block}
     .card-ph{height:200px;background:linear-gradient(135deg,var(--accent-light),var(--surface2));display:flex;align-items:center;justify-content:center;font-size:48px}
     .card-body{padding:20px}
     .card-date{font-size:11px;color:var(--text3);margin-bottom:8px}
@@ -63,24 +73,41 @@
     .card-foot{display:flex;justify-content:space-between;align-items:center}
     .read-more{color:var(--accent);font-weight:600;font-size:13px}
     .tag{background:var(--accent-light);color:var(--accent);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+
+    /* PAGINATION */
+    .pagination{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:40px;flex-wrap:wrap}
+    .pg-btn{width:40px;height:40px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--surface);color:var(--text2);font-family:'Vazirmatn',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+    .pg-btn:hover{background:var(--surface2)}
+    .pg-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .pg-btn:disabled{opacity:.4;cursor:not-allowed}
+    .pg-info{color:var(--text3);font-size:13px;padding:0 8px}
+
+    /* EMPTY/LOADING */
     .empty{text-align:center;padding:80px 20px;color:var(--text3);grid-column:1/-1}
     .empty .icon{font-size:56px;margin-bottom:14px}
     .empty h3{font-size:18px;font-weight:700;color:var(--text2);margin-bottom:6px}
+
+    /* DETAIL */
     .detail-wrap{max-width:800px;margin:0 auto;padding:40px 20px}
     .back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--text2);font-size:14px;cursor:pointer;margin-bottom:28px;padding:8px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);transition:background .2s}
     .back-btn:hover{background:var(--surface2)}
     .detail-img{width:100%;max-height:420px;object-fit:cover;border-radius:var(--r);margin-bottom:30px;box-shadow:var(--shadow)}
     .detail-title{font-size:clamp(22px,4vw,32px);font-weight:800;margin-bottom:12px;line-height:1.4}
-    .detail-meta{color:var(--text3);font-size:13px;margin-bottom:24px;display:flex;gap:16px;flex-wrap:wrap}
+    .detail-meta{color:var(--text3);font-size:13px;margin-bottom:24px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+    .detail-actions{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
     .detail-content{color:var(--text2);line-height:1.9;font-size:15px;white-space:pre-wrap}
     .video-frame{width:100%;border-radius:var(--r);overflow:hidden;margin-bottom:28px;background:#000}
     .video-frame iframe{width:100%;height:360px;border:none;display:block}
     .video-link-btn{display:flex;align-items:center;gap:10px;padding:16px 20px;background:linear-gradient(135deg,#1a1a1a,#2d2d2d);color:#fff;text-decoration:none;border-radius:var(--r);margin-bottom:28px;font-size:14px;font-weight:600}
+
+    /* LOGIN */
     .login-page{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:20px}
     .login-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:40px;width:100%;max-width:380px;box-shadow:var(--shadow-lg)}
     .login-logo{text-align:center;font-size:48px;margin-bottom:20px}
     .login-title{font-size:22px;font-weight:800;text-align:center;margin-bottom:4px}
     .login-sub{color:var(--text3);font-size:13px;text-align:center;margin-bottom:28px}
+
+    /* FORM */
     .f-group{margin-bottom:16px}
     .f-label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text2)}
     .f-input,.f-textarea{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Vazirmatn',sans-serif;font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color .2s}
@@ -91,6 +118,22 @@
     .alert{padding:10px 14px;border-radius:var(--r-sm);font-size:13px;margin-bottom:14px;display:none;line-height:1.6}
     .alert-err{background:#fef2f2;border:1px solid #fecaca;color:var(--red)}
     .alert-ok{background:#f0fdf4;border:1px solid #86efac;color:#166534}
+
+    /* IMAGE UPLOAD */
+    .upload-area{border:2px dashed var(--border);border-radius:var(--r-sm);padding:24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2);position:relative}
+    .upload-area:hover,.upload-area.drag{border-color:var(--accent);background:var(--accent-light)}
+    .upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .upload-preview{width:100%;max-height:180px;object-fit:cover;border-radius:var(--r-sm);margin-top:12px;display:none}
+    .upload-progress{height:4px;background:var(--border);border-radius:2px;margin-top:10px;display:none}
+    .upload-progress-bar{height:100%;background:var(--accent);border-radius:2px;transition:width .3s;width:0%}
+
+    /* CATEGORY TABS */
+    .cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+    .cat-tab{padding:7px 16px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface);font-family:'Vazirmatn',sans-serif;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s}
+    .cat-tab:hover{background:var(--surface2)}
+    .cat-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+    /* ADMIN */
     .admin-wrap{max-width:1100px;margin:0 auto;padding:40px 20px}
     .admin-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
     .tabs{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:var(--r-sm);margin-bottom:28px}
@@ -103,49 +146,49 @@
     .list-title{font-weight:700;font-size:15px;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .list-date{color:var(--text3);font-size:12px}
     .list-actions{display:flex;gap:8px;flex-shrink:0}
+
+    /* TOAST */
     .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:#222;color:#fff;padding:12px 28px;border-radius:50px;font-size:14px;font-weight:600;z-index:9999;transition:transform .3s;box-shadow:0 8px 30px rgba(0,0,0,.3);white-space:nowrap;pointer-events:none}
     .toast.show{transform:translateX(-50%) translateY(0)}
     .toast.ok{background:var(--accent)}
     .toast.err{background:var(--red)}
-    .spin{width:18px;height:18px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spinA .6s linear infinite;display:inline-block;vertical-align:middle}
-    @keyframes spinA{to{transform:rotate(360deg)}}
+
+    .spin{width:18px;height:18px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;display:inline-block;vertical-align:middle}
+    @keyframes sp{to{transform:rotate(360deg)}}
     footer{background:var(--text);color:rgba(255,255,255,.6);text-align:center;padding:24px;font-size:13px;margin-top:60px}
     .p404{text-align:center;padding:100px 20px}
     .p404 .num{font-size:120px;font-weight:800;color:var(--surface2);line-height:1}
     .p404 h2{font-size:24px;font-weight:700;margin-bottom:10px}
     .p404 p{color:var(--text3);margin-bottom:28px}
-    @media(max-width:640px){.f-grid{grid-template-columns:1fr}.list-item{flex-wrap:wrap}.hdr{padding:0 14px}.list-actions{width:100%}}
+    @media(max-width:640px){.f-grid{grid-template-columns:1fr}.list-item{flex-wrap:wrap}.hdr{padding:0 14px}.list-actions{width:100%}.detail-actions{flex-direction:column}}
   </style>
 </head>
 <body>
 
-<!-- ============================================================
-  ⚙️ فقط این ۲ خط را تغییر بده:
-  SB_URL  = آدرس پروژه‌ات از Supabase → Settings → API
-  SB_KEY  = کلید anon public از Supabase → Settings → API
-============================================================ -->
+<!-- ⚙️ فقط این ۲ خط را عوض کن -->
 <script>
   const SB_URL = 'https://tjztualnmoliusuoxpdx.supabase.co'
   const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRqenR1YWxubW9saXVzdW94cGR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0MzIyNDksImV4cCI6MjA4NzAwODI0OX0.PSMSMyUpejqXs3SOv0jLB15SMobyh6PKWvQQz_VEsBw'
+  const PER_PAGE = 4  // تعداد مقاله در هر صفحه
 </script>
 
 <!-- HEADER -->
 <header id="hdr">
   <div class="hdr">
-    <a class="logo" onclick="go('home')">
+    <div class="logo" onclick="go('home')">
       <div class="logo-icon">💰</div>
       <div>
         <div class="logo-name">درآمد نو</div>
         <div class="logo-sub">مقالات کسب درآمد</div>
       </div>
-    </a>
+    </div>
     <button class="btn btn-ghost" onclick="go('admin')">⚙ پنل ادمین</button>
   </div>
 </header>
 
 <div class="toast" id="toast"></div>
 
-<!-- HOME -->
+<!-- ===== HOME ===== -->
 <div class="page active" id="pg-home">
   <div class="hero">
     <h1>🚀 راهنمای کسب درآمد آنلاین</h1>
@@ -162,10 +205,11 @@
       <div id="artCount" style="color:var(--text3);font-size:13px"></div>
     </div>
     <div class="grid" id="artGrid"></div>
+    <div class="pagination" id="pagination"></div>
   </div>
 </div>
 
-<!-- DETAIL -->
+<!-- ===== DETAIL ===== -->
 <div class="page" id="pg-detail">
   <div class="detail-wrap">
     <div class="back-btn" onclick="go('home')">← بازگشت به مقالات</div>
@@ -173,7 +217,7 @@
   </div>
 </div>
 
-<!-- LOGIN -->
+<!-- ===== LOGIN ===== -->
 <div class="page" id="pg-login">
   <div class="login-page">
     <div class="login-card">
@@ -200,7 +244,7 @@
   </div>
 </div>
 
-<!-- ADMIN -->
+<!-- ===== ADMIN ===== -->
 <div class="page" id="pg-admin">
   <div class="admin-wrap">
     <div class="admin-hdr">
@@ -217,25 +261,60 @@
       <div class="tab on" id="tab-list" onclick="switchTab('list')">📋 لیست مقالات</div>
       <div class="tab"    id="tab-form" onclick="switchTab('form')">➕ افزودن مقاله</div>
     </div>
+
+    <!-- LIST -->
     <div id="tabList"></div>
+
+    <!-- FORM -->
     <div id="tabForm" style="display:none">
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px">
         <h3 id="formHeading" style="font-weight:700;font-size:18px;margin-bottom:20px">➕ افزودن مقاله جدید</h3>
         <div class="alert alert-err" id="formErr"></div>
         <div class="alert alert-ok"  id="formOk"></div>
         <input type="hidden" id="editId">
+
         <div class="f-grid">
           <div class="f-group f-full">
             <label class="f-label">عنوان مقاله <span style="color:var(--red)">*</span></label>
             <input class="f-input" id="fTitle" placeholder="عنوان مقاله را وارد کنید">
           </div>
-          <div class="f-group">
-            <label class="f-label">لینک تصویر</label>
-            <input class="f-input" id="fImage" type="url" placeholder="https://example.com/image.jpg">
+
+          <!-- IMAGE UPLOAD -->
+          <div class="f-group f-full">
+            <label class="f-label">تصویر مقاله</label>
+            <div class="upload-area" id="uploadArea">
+              <input type="file" id="fImageFile" accept="image/*" onchange="handleImageFile(this)">
+              <div id="uploadPlaceholder">
+                <div style="font-size:32px;margin-bottom:8px">🖼</div>
+                <div style="font-weight:600;font-size:14px;color:var(--text2)">عکس را اینجا بکش یا کلیک کن</div>
+                <div style="font-size:12px;color:var(--text3);margin-top:4px">JPG، PNG یا WebP — حداکثر ۵ مگابایت</div>
+              </div>
+              <img id="uploadPreview" class="upload-preview">
+              <div class="upload-progress" id="uploadProgress">
+                <div class="upload-progress-bar" id="uploadProgressBar"></div>
+              </div>
+            </div>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
+              <span style="font-size:12px;color:var(--text3)">یا لینک مستقیم:</span>
+              <input class="f-input" id="fImageUrl" type="url" placeholder="https://example.com/image.jpg"
+                style="flex:1" oninput="onImageUrlInput(this.value)">
+            </div>
+            <input type="hidden" id="fImageFinal">
           </div>
+
           <div class="f-group">
             <label class="f-label">لینک ویدیو (اختیاری)</label>
             <input class="f-input" id="fVideo" type="url" placeholder="https://youtube.com/watch?v=...">
+          </div>
+          <div class="f-group">
+            <label class="f-label">دسته‌بندی</label>
+            <select class="f-input" id="fCat">
+              <option value="کسب درآمد">💰 کسب درآمد</option>
+              <option value="فریلنسری">💻 فریلنسری</option>
+              <option value="سرمایه‌گذاری">📈 سرمایه‌گذاری</option>
+              <option value="کارآفرینی">🚀 کارآفرینی</option>
+              <option value="بازاریابی">📣 بازاریابی</option>
+            </select>
           </div>
           <div class="f-group f-full">
             <label class="f-label">توضیح کوتاه <span style="color:var(--red)">*</span></label>
@@ -246,7 +325,8 @@
             <textarea class="f-textarea" id="fContent" placeholder="متن کامل مقاله را اینجا بنویسید..."></textarea>
           </div>
         </div>
-        <div style="display:flex;gap:10px;margin-top:8px">
+
+        <div style="display:flex;gap:10px;margin-top:8px;flex-wrap:wrap">
           <button class="btn btn-primary" id="saveBtn" onclick="saveArticle()">💾 ذخیره مقاله</button>
           <button class="btn btn-ghost" onclick="cancelEdit()">انصراف</button>
         </div>
@@ -268,7 +348,7 @@
 <footer><p>ساخته شده با ❤️ | درآمد نو &copy; ۱۴۰۳</p></footer>
 
 <script>
-// ── SUPABASE INIT ──────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────
 let sb = null
 const sbReady = (() => {
   if (!SB_KEY || SB_KEY === 'YOUR_ANON_KEY_HERE') return false
@@ -276,19 +356,27 @@ const sbReady = (() => {
   catch { return false }
 })()
 
+// ── STATE ─────────────────────────────────────────────────
+let currentPage = 1
+let totalCount  = 0
+let searchQuery = ''
+let allArticles = []
+let uploadedImageUrl = ''
+
 // ── NAVIGATION ────────────────────────────────────────────
 function go(page, id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
   document.getElementById('hdr').style.display = page === 'login' ? 'none' : ''
 
   if (page === 'home') {
-    show('pg-home'); loadArticles()
+    show('pg-home')
+    currentPage = 1
+    loadArticles()
   } else if (page === 'detail' && id) {
-    show('pg-detail'); loadDetail(id)
+    show('pg-detail')
+    loadDetail(id)
   } else if (page === 'admin') {
-    if (!sbReady) {
-      showNoKey(); return
-    }
+    if (!sbReady) { alert('⚠️ کلید Supabase را وارد کن'); return }
     sb.auth.getSession().then(({ data: { session } }) => {
       if (session) { show('pg-admin'); loadAdminList() }
       else show('pg-login')
@@ -323,7 +411,7 @@ async function doLogin() {
 
   if (error) {
     let msg = 'ایمیل یا رمز اشتباه است'
-    if (error.message.includes('not confirmed')) msg = 'ایمیل تأیید نشده — در Supabase → Auth → Users تیک "Confirm" را بزن'
+    if (error.message.includes('not confirmed')) msg = 'ایمیل تأیید نشده — در Supabase تیک Auto Confirm را بزن'
     showAlert(errEl, msg)
     return
   }
@@ -341,45 +429,58 @@ async function doLogout() {
   toast('از سیستم خارج شدید', 'ok')
 }
 
-// ── ARTICLES READ ─────────────────────────────────────────
+// ── ARTICLES READ + PAGINATION ────────────────────────────
 let searchTimer
 function onSearch(v) {
   clearTimeout(searchTimer)
-  searchTimer = setTimeout(() => loadArticles(v), 300)
+  searchTimer = setTimeout(() => {
+    searchQuery = v
+    currentPage = 1
+    loadArticles()
+  }, 300)
 }
 
-async function loadArticles(q = '') {
+async function loadArticles() {
   const grid = document.getElementById('artGrid')
   const cnt  = document.getElementById('artCount')
+  const pag  = document.getElementById('pagination')
 
   if (!sbReady) {
     grid.innerHTML = `<div class="empty" style="grid-column:1/-1">
-      <div class="icon">⚙️</div>
-      <h3>کلید Supabase وارد نشده</h3>
-      <p style="font-size:13px;margin-top:6px">فایل را باز کن و <code style="background:#eee;padding:2px 6px;border-radius:4px">YOUR_ANON_KEY_HERE</code> را با کلید واقعی جایگزین کن</p>
+      <div class="icon">⚙️</div><h3>کلید Supabase وارد نشده</h3>
+      <p>مقدار YOUR_ANON_KEY_HERE را در فایل HTML با کلید واقعی جایگزین کن</p>
     </div>`
     return
   }
 
   grid.innerHTML = spinning()
+  pag.innerHTML = ''
 
-  let q2 = sb.from('articles').select('*').order('created_at', { ascending: false })
-  if (q.trim()) q2 = q2.or(`title.ilike.%${q}%,short_description.ilike.%${q}%`)
+  const from = (currentPage - 1) * PER_PAGE
+  const to   = from + PER_PAGE - 1
 
-  const { data, error } = await q2
+  let query = sb.from('articles').select('*', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(from, to)
 
-  if (error) {
-    grid.innerHTML = errHtml(error.message)
-    return
+  if (searchQuery.trim()) {
+    query = query.or(`title.ilike.%${searchQuery}%,short_description.ilike.%${searchQuery}%`)
   }
 
-  cnt.textContent = `${data.length} مقاله`
+  const { data, error, count } = await query
 
-  if (!data.length) {
+  if (error) { grid.innerHTML = errHtml(error.message); return }
+
+  totalCount = count || 0
+  const totalPages = Math.ceil(totalCount / PER_PAGE)
+
+  cnt.textContent = totalCount > 0 ? `${totalCount} مقاله` : ''
+
+  if (!data || !data.length) {
     grid.innerHTML = `<div class="empty">
-      <div class="icon">${q ? '🔍' : '📂'}</div>
-      <h3>${q ? 'مقاله‌ای یافت نشد' : 'هنوز مقاله‌ای نیست'}</h3>
-      <p>${q ? 'عبارت دیگری امتحان کنید' : 'از پنل ادمین مقاله اضافه کنید'}</p>
+      <div class="icon">${searchQuery ? '🔍' : '📂'}</div>
+      <h3>${searchQuery ? 'مقاله‌ای یافت نشد' : 'هنوز مقاله‌ای نیست'}</h3>
+      <p>${searchQuery ? 'عبارت دیگری امتحان کنید' : 'از پنل ادمین مقاله اضافه کنید'}</p>
     </div>`
     return
   }
@@ -392,17 +493,55 @@ async function loadArticles(q = '') {
         : ''}
       <div class="card-ph" ${a.image ? 'style="display:none"' : ''}>📄</div>
       <div class="card-body">
-        <div class="card-date">📅 ${fd(a.created_at)}</div>
+        <div class="card-date">
+          📅 ${fd(a.created_at)}
+          ${a.category ? `<span style="margin-right:8px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:10px;font-size:10px">${x(a.category)}</span>` : ''}
+        </div>
         <div class="card-title">${x(a.title)}</div>
         <div class="card-desc">${x(a.short_description)}</div>
         <div class="card-foot">
           <span class="read-more">مشاهده بیشتر ←</span>
-          <span class="tag">کسب درآمد</span>
+          <span class="tag">${x(a.category || 'کسب درآمد')}</span>
         </div>
       </div>
     </div>`).join('')
+
+  // PAGINATION
+  if (totalPages > 1) {
+    renderPagination(currentPage, totalPages)
+  }
 }
 
+function renderPagination(cur, total) {
+  const pag = document.getElementById('pagination')
+  let html = ''
+
+  html += `<button class="pg-btn" onclick="goPage(${cur-1})" ${cur===1?'disabled':''}>›</button>`
+
+  for (let i = 1; i <= total; i++) {
+    if (
+      i === 1 || i === total ||
+      (i >= cur - 2 && i <= cur + 2)
+    ) {
+      html += `<button class="pg-btn ${i===cur?'active':''}" onclick="goPage(${i})">${i}</button>`
+    } else if (i === cur - 3 || i === cur + 3) {
+      html += `<span class="pg-info">...</span>`
+    }
+  }
+
+  html += `<button class="pg-btn" onclick="goPage(${cur+1})" ${cur===total?'disabled':''}>‹</button>`
+  html += `<span class="pg-info">${cur} از ${total}</span>`
+
+  pag.innerHTML = html
+}
+
+function goPage(p) {
+  currentPage = p
+  loadArticles()
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+// ── DETAIL + PDF ──────────────────────────────────────────
 async function loadDetail(id) {
   const body = document.getElementById('detailBody')
   body.innerHTML = spinning(true)
@@ -425,9 +564,178 @@ async function loadDetail(id) {
   body.innerHTML = `
     ${a.image ? `<img class="detail-img" src="${x(a.image)}" alt="${x(a.title)}" loading="lazy">` : ''}
     <h1 class="detail-title">${x(a.title)}</h1>
-    <div class="detail-meta"><span>📅 ${fd(a.created_at)}</span><span>🏷 کسب درآمد</span></div>
+    <div class="detail-meta">
+      <span>📅 ${fd(a.created_at)}</span>
+      <span>🏷 ${x(a.category || 'کسب درآمد')}</span>
+    </div>
+    <div class="detail-actions">
+      <button class="btn btn-pdf" onclick="downloadPDF(${a.id})">📄 دانلود PDF</button>
+    </div>
     ${videoHtml}
-    <div class="detail-content">${x(a.full_content)}</div>`
+    <div class="detail-content" id="articleContent">${x(a.full_content)}</div>
+  `
+
+  // Store for PDF
+  window._currentArticle = a
+}
+
+async function downloadPDF(id) {
+  const a = window._currentArticle
+  if (!a) return
+
+  toast('در حال ساخت PDF...', '')
+
+  try {
+    const { jsPDF } = window.jspdf
+    const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' })
+
+    const pageW  = doc.internal.pageSize.getWidth()
+    const pageH  = doc.internal.pageSize.getHeight()
+    const margin = 20
+    const maxW   = pageW - margin * 2
+    let y = margin
+
+    // Header bar
+    doc.setFillColor(45, 106, 79)
+    doc.rect(0, 0, pageW, 18, 'F')
+    doc.setTextColor(255, 255, 255)
+    doc.setFontSize(10)
+    doc.text('daramad-noo.github.io', margin, 12)
+    doc.text(fd(a.created_at), pageW - margin, 12, { align: 'right' })
+
+    y = 30
+
+    // Title
+    doc.setTextColor(26, 26, 24)
+    doc.setFontSize(18)
+    doc.setFont('helvetica', 'bold')
+    const titleLines = doc.splitTextToSize(a.title, maxW)
+    doc.text(titleLines, pageW - margin, y, { align: 'right' })
+    y += titleLines.length * 8 + 6
+
+    // Divider
+    doc.setDrawColor(45, 106, 79)
+    doc.setLineWidth(0.5)
+    doc.line(margin, y, pageW - margin, y)
+    y += 8
+
+    // Category + Date
+    doc.setFontSize(10)
+    doc.setFont('helvetica', 'normal')
+    doc.setTextColor(138, 138, 130)
+    doc.text(`Category: ${a.category || 'کسب درآمد'}   |   Date: ${fd(a.created_at)}`, pageW - margin, y, { align: 'right' })
+    y += 12
+
+    // Short description box
+    doc.setFillColor(240, 237, 230)
+    doc.roundedRect(margin, y, maxW, 14, 2, 2, 'F')
+    doc.setFontSize(11)
+    doc.setTextColor(74, 74, 69)
+    doc.setFont('helvetica', 'italic')
+    const shortLines = doc.splitTextToSize(a.short_description, maxW - 8)
+    doc.text(shortLines, pageW - margin - 4, y + 9, { align: 'right' })
+    y += 20
+
+    // Content
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(11)
+    doc.setTextColor(74, 74, 69)
+
+    const contentLines = doc.splitTextToSize(a.full_content, maxW)
+    for (const line of contentLines) {
+      if (y + 7 > pageH - 20) {
+        doc.addPage()
+        y = margin
+      }
+      doc.text(line, pageW - margin, y, { align: 'right' })
+      y += 7
+    }
+
+    // Footer
+    const totalPages = doc.internal.getNumberOfPages()
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i)
+      doc.setFillColor(247, 245, 240)
+      doc.rect(0, pageH - 12, pageW, 12, 'F')
+      doc.setFontSize(9)
+      doc.setTextColor(138, 138, 130)
+      doc.text(`درآمد نو | ${a.title}`, margin, pageH - 4)
+      doc.text(`${i} / ${totalPages}`, pageW - margin, pageH - 4, { align: 'right' })
+    }
+
+    doc.save(`${a.title}.pdf`)
+    toast('PDF دانلود شد ✓', 'ok')
+  } catch(e) {
+    toast('خطا در ساخت PDF', 'err')
+    console.error(e)
+  }
+}
+
+// ── IMAGE UPLOAD ──────────────────────────────────────────
+async function handleImageFile(input) {
+  const file = input.files[0]
+  if (!file) return
+
+  if (file.size > 5 * 1024 * 1024) {
+    toast('حجم عکس بیشتر از ۵ مگابایت است', 'err'); return
+  }
+
+  // Show preview
+  const reader = new FileReader()
+  reader.onload = e => {
+    const prev = document.getElementById('uploadPreview')
+    prev.src = e.target.result
+    prev.style.display = 'block'
+    document.getElementById('uploadPlaceholder').style.display = 'none'
+  }
+  reader.readAsDataURL(file)
+
+  // Upload to Supabase Storage
+  const { data: { session } } = await sb.auth.getSession()
+  if (!session) {
+    toast('برای آپلود عکس باید لاگین کنی', 'err'); return
+  }
+
+  const progress = document.getElementById('uploadProgress')
+  const bar      = document.getElementById('uploadProgressBar')
+  progress.style.display = 'block'
+  bar.style.width = '30%'
+
+  const ext      = file.name.split('.').pop()
+  const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+
+  bar.style.width = '60%'
+
+  const { data, error } = await sb.storage
+    .from('article-images')
+    .upload(fileName, file, { cacheControl: '3600', upsert: false })
+
+  bar.style.width = '100%'
+
+  if (error) {
+    toast('خطا در آپلود: ' + error.message, 'err')
+    progress.style.display = 'none'
+    return
+  }
+
+  const { data: urlData } = sb.storage.from('article-images').getPublicUrl(fileName)
+  uploadedImageUrl = urlData.publicUrl
+  document.getElementById('fImageFinal').value = uploadedImageUrl
+  document.getElementById('fImageUrl').value   = ''
+
+  setTimeout(() => { progress.style.display = 'none'; bar.style.width = '0%' }, 800)
+  toast('عکس آپلود شد ✓', 'ok')
+}
+
+function onImageUrlInput(val) {
+  if (val) {
+    uploadedImageUrl = ''
+    document.getElementById('fImageFinal').value = val
+    const prev = document.getElementById('uploadPreview')
+    prev.src = val
+    prev.style.display = 'block'
+    document.getElementById('uploadPlaceholder').style.display = 'none'
+  }
 }
 
 // ── ADMIN CRUD ────────────────────────────────────────────
@@ -454,7 +762,7 @@ async function loadAdminList() {
       </div>
       <div class="list-info">
         <div class="list-title">${x(a.title)}</div>
-        <div class="list-date">📅 ${fd(a.created_at)}</div>
+        <div class="list-date">📅 ${fd(a.created_at)} ${a.category ? '· '+x(a.category) : ''}</div>
       </div>
       <div class="list-actions">
         <button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="go('detail',${a.id})">👁</button>
@@ -467,23 +775,35 @@ async function loadAdminList() {
 async function editArticle(id) {
   const { data: a } = await sb.from('articles').select('*').eq('id', id).single()
   if (!a) return
+
   document.getElementById('editId').value   = a.id
   document.getElementById('fTitle').value   = a.title
-  document.getElementById('fImage').value   = a.image || ''
+  document.getElementById('fImageUrl').value = a.image || ''
+  document.getElementById('fImageFinal').value = a.image || ''
   document.getElementById('fVideo').value   = a.video_link || ''
   document.getElementById('fShort').value   = a.short_description
   document.getElementById('fContent').value = a.full_content
+  document.getElementById('fCat').value     = a.category || 'کسب درآمد'
   document.getElementById('formHeading').textContent = '✏ ویرایش مقاله'
+
+  if (a.image) {
+    const prev = document.getElementById('uploadPreview')
+    prev.src = a.image
+    prev.style.display = 'block'
+    document.getElementById('uploadPlaceholder').style.display = 'none'
+  }
+
   switchTab('form')
   window.scrollTo(0, 0)
 }
 
 async function saveArticle() {
   const title   = document.getElementById('fTitle').value.trim()
-  const image   = document.getElementById('fImage').value.trim()
+  const image   = document.getElementById('fImageFinal').value.trim() || document.getElementById('fImageUrl').value.trim()
   const video   = document.getElementById('fVideo').value.trim()
   const short   = document.getElementById('fShort').value.trim()
   const content = document.getElementById('fContent').value.trim()
+  const cat     = document.getElementById('fCat').value
   const editId  = document.getElementById('editId').value
   const errEl   = document.getElementById('formErr')
   const okEl    = document.getElementById('formOk')
@@ -497,7 +817,8 @@ async function saveArticle() {
   btn.innerHTML = '<span class="spin"></span> در حال ذخیره...'
   btn.disabled = true
 
-  const payload = { title, image, video_link: video, short_description: short, full_content: content }
+  const payload = { title, image, video_link: video, short_description: short, full_content: content, category: cat }
+
   const { error } = editId
     ? await sb.from('articles').update(payload).eq('id', editId)
     : await sb.from('articles').insert([payload])
@@ -507,8 +828,8 @@ async function saveArticle() {
 
   if (error) {
     let msg = `خطا: ${error.message}`
-    if (error.message.includes('policy') || error.code === '42501') msg = '⚠️ دسترسی رد شد — Policy جدول را بررسی کن'
-    if (error.message.includes('does not exist'))                    msg = '⚠️ جدول articles در Supabase ساخته نشده'
+    if (error.message.includes('policy') || error.code === '42501') msg = '⚠️ دسترسی رد شد — مطمئن شو که لاگین هستی'
+    if (error.message.includes('does not exist')) msg = '⚠️ ستون category وجود ندارد — SQL پایین را اجرا کن'
     showAlert(errEl, msg)
     return
   }
@@ -534,8 +855,15 @@ function switchTab(t) {
 }
 
 function cancelEdit() {
-  ['editId','fTitle','fImage','fVideo','fShort','fContent'].forEach(id => document.getElementById(id).value = '')
+  ['editId','fTitle','fImageUrl','fImageFinal','fVideo','fShort','fContent'].forEach(id => {
+    document.getElementById(id).value = ''
+  })
+  document.getElementById('fCat').value = 'کسب درآمد'
   document.getElementById('formHeading').textContent = '➕ افزودن مقاله جدید'
+  document.getElementById('uploadPreview').style.display = 'none'
+  document.getElementById('uploadPlaceholder').style.display = 'block'
+  document.getElementById('fImageFile').value = ''
+  uploadedImageUrl = ''
   hide(document.getElementById('formErr'))
   hide(document.getElementById('formOk'))
   switchTab('list')
@@ -550,7 +878,6 @@ function hide(el){if(el)el.style.display='none'}
 function toast(msg,type=''){const el=document.getElementById('toast');el.textContent=msg;el.className=`toast ${type} show`;clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),3000)}
 function spinning(c=false){return `<div style="text-align:center;padding:${c?'80':'40'}px 20px;color:var(--text3);grid-column:1/-1"><div style="font-size:36px">⏳</div><p style="margin-top:10px">در حال بارگذاری...</p></div>`}
 function errHtml(msg){return `<div class="empty" style="grid-column:1/-1"><div class="icon">⚠️</div><h3>خطا در اتصال</h3><p style="font-size:12px;color:var(--red);margin-top:8px">${x(msg)}</p></div>`}
-function showNoKey(){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));show('pg-home');setTimeout(()=>{document.getElementById('artGrid').innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="icon">⚙️</div><h3>کلید Supabase وارد نشده</h3><p>فایل HTML را باز کن و کلید anon را جایگزین کن</p></div>`},100)}
 
 // ── START ─────────────────────────────────────────────────
 loadArticles()
