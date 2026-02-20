@@ -800,7 +800,7 @@ function processContent(html) {
 
   // Convert ad placeholders to real ad divs with unique IDs
   html = html.replace(/<div[^>]*data-ad="([^"]+)"[^>]*>.*?<\/div>/gi, (match, adId) => {
-    return `<div class="yn-ad-wrap"><div class="yn-ad-label">تبلیغات</div><div id="${adId}-${Math.random().toString(36).slice(2)}"></div></div>`
+    return `<div id="pos-article-display-card-116213"></div>`
   })
 
   // rich html — split on closing block tags
