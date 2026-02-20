@@ -29,11 +29,6 @@
   <meta name="twitter:description" id="twDesc"  content="مقالات تخصصی کسب درآمد آنلاین، فریلنسری، سرمایه‌گذاری و کارآفرینی.">
   <meta name="twitter:image"       id="twImage" content="https://mohamadalighane.github.io/daramad-noo/og-image.png">
 
-<script>
-            !function(e,t,n){e.yektanetAnalyticsObject=n,e[n]=e[n]||function(){e[n].q.push(arguments)},e[n].q=e[n].q||[];var a=t.getElementsByTagName("head")[0],r=new Date,c="https://cdn.yektanet.com/superscript/YjPyWkx4/native-proai-eta.vercel.app-45688/yn_pub.js?v="+r.getFullYear().toString()+"0"+r.getMonth()+"0"+r.getDate()+"0"+r.getHours(),s=t.createElement("link");s.rel="preload",s.as="script",s.href=c,a.appendChild(s);var l=t.createElement("script");l.async=!0,l.src=c,a.appendChild(l)}(window,document,"yektanet");
-        </script>
-
-
   <!-- SCHEMA.ORG -->
   <script type="application/ld+json" id="schemaOrg">
   {
@@ -51,11 +46,21 @@
   }
   </script>
 
+  <script>
+            !function(e,t,n){e.yektanetAnalyticsObject=n,e[n]=e[n]||function(){e[n].q.push(arguments)},e[n].q=e[n].q||[];var a=t.getElementsByTagName("head")[0],r=new Date,c="https://cdn.yektanet.com/superscript/YjPyWkx4/native-proai-eta.vercel.app-45688/yn_pub.js?v="+r.getFullYear().toString()+"0"+r.getMonth()+"0"+r.getDate()+"0"+r.getHours(),s=t.createElement("link");s.rel="preload",s.as="script",s.href=c,a.appendChild(s);var l=t.createElement("script");l.async=!0,l.src=c,a.appendChild(l)}(window,document,"yektanet");
+        </script>
+
+
   <!-- PRECONNECT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="dns-prefetch" href="https://tjztualnmoliusuoxpdx.supabase.co">
+
+  <!-- YEKTANET MAIN SCRIPT -->
+  <script>
+    !function(e,t,n){e.yektanetAnalyticsObject=n,e[n]=e[n]||function(){e[n].q.push(arguments)},e[n].q=e[n].q||[];var a=t.getElementsByTagName("head")[0],r=new Date,c="https://cdn.yektanet.com/superscript/YjPyWkx4/native-proai-eta.vercel.app-45688/yn_pub.js?v="+r.getFullYear().toString()+"0"+r.getMonth()+"0"+r.getDate()+"0"+r.getHours(),s=t.createElement("link");s.rel="preload",s.as="script",s.href=c,a.appendChild(s);var l=t.createElement("script");l.async=!0,l.src=c,a.appendChild(l)}(window,document,"yektanet");
+  </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -232,6 +237,7 @@
     .editor-body code{background:#f0ede6;color:var(--accent);padding:1px 5px;border-radius:3px;font-family:monospace}
     .editor-body ul,.editor-body ol{padding-right:24px;margin:8px 0}
     .editor-body a{color:var(--accent);text-decoration:underline}
+    .editor-body .yn-ad-placeholder{background:#fffbeb;border:2px dashed #b08d57;border-radius:8px;padding:12px 16px;margin:16px 0;text-align:center;display:block}
     .editor-footer{padding:6px 12px;background:var(--surface2);border-top:1px solid var(--border);font-size:11px;color:var(--text3);display:flex;justify-content:space-between}
 
     /* ADMIN */
@@ -341,7 +347,6 @@
   <div class="detail-wrap">
     <div class="back-btn" onclick="go('home')">← بازگشت به مقالات</div>
     <div id="detailBody"></div>
-    <div id="pos-article-display-card-116213"></div>
   </div>
 </div>
 
@@ -791,16 +796,18 @@ async function loadDetail(id) {
 
 function processContent(html) {
   if (!html) return ''
-
-  const AD_ID = 'pos-article-display-card-116213'
-  const adHtml = `<div class="yn-ad-wrap"><div class="yn-ad-label">تبلیغات</div><div id="${AD_ID}-inline-${Date.now()}"></div></div>`
-
   // plain text
   if (!/<[a-z][\s\S]*>/i.test(html)) {
-    const paras = html.split('\n').map(l => l.trim() ? `<p>${x(l)}</p>` : '').filter(Boolean)
-    return injectAds(paras, adHtml).join('')
+    return html.split('\n').map(l => l.trim() ? '<p>' + x(l) + '</p>' : '').filter(Boolean).join('')
   }
-
+  // Convert yn-ad-placeholder divs to real Yektanet ad divs with unique IDs
+  let counter = 0
+  html = html.replace(/<div[^>]*data-yn="([^"]+)"[^>]*>[\s\S]*?<\/div>/gi, function(match, adId) {
+    counter++
+    var uid = adId + '-live-' + counter + '-' + Date.now()
+    return '<div style="margin:24px 0;text-align:center"><div style="font-size:10px;color:#8a8a82;margin-bottom:4px">تبلیغات</div><div id="' + uid + '"></div></div>' +
+           '<script>if(window.yektanet){yektanet("display","' + adId + '","' + uid + '")}<\/script>'
+  })
   return html
 }
 
@@ -981,10 +988,19 @@ function insertHR() {
 }
 
 function insertAdBlock() {
-  document.execCommand('insertHTML', false, '<div id="pos-article-display-card-116213"></div>')
-  toast('تبلیغ اضافه شد ✓', 'ok')
+  const editor = document.getElementById('editorBody')
+  editor.focus()
+  const uid = 'yn' + Date.now()
+  // Insert a visible placeholder div that will be converted on display
+  document.execCommand('insertHTML', false,
+    '<div class="yn-ad-placeholder" data-yn="pos-article-display-card-116213" data-uid="' + uid + '" contenteditable="false">' +
+    '<span style="font-size:13px;font-weight:700;color:#92400e;font-family:Vazirmatn,sans-serif">📢 جایگاه تبلیغ یکتانت</span><br>' +
+    '<span style="font-size:11px;color:#b08d57;font-family:Vazirmatn,sans-serif">هنگام نمایش مقاله، اینجا تبلیغ نمایش داده می‌شود</span>' +
+    '</div><p><br></p>'
+  )
+  updateWordCount()
+  toast('جایگاه تبلیغ اضافه شد ✓', 'ok')
 }
-
 function openLinkModal() {
   const sel = window.getSelection()
   if (sel && sel.rangeCount > 0) savedRange = sel.getRangeAt(0).cloneRange()
