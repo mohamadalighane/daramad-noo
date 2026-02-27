@@ -20,12 +20,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    
-  <script>window.NAJVA={};var s=document.createElement("script");s.src="https://van.najva.com/static/js/main-script.js";s.defer=!0;s.id="najva-mini-script";s.setAttribute("data-najva-id","e35f8d3d-3bb6-4151-bca2-a7b75a5c3f3b");document.head.appendChild(s);</script>
+<script>window.NAJVA={};var s=document.createElement("script");s.src="https://van.najva.com/static/js/main-script.js";s.defer=!0;s.id="najva-mini-script";s.setAttribute("data-najva-id","e35f8d3d-3bb6-4151-bca2-a7b75a5c3f3b");document.head.appendChild(s);</script>
 
    <script>
             !function(e,t,n){e.yektanetAnalyticsObject=n,e[n]=e[n]||function(){e[n].q.push(arguments)},e[n].q=e[n].q||[];var a=t.getElementsByTagName("head")[0],r=new Date,c="https://cdn.yektanet.com/superscript/YjPyWkx4/native-proai-eta.vercel.app-45688/yn_pub.js?v="+r.getFullYear().toString()+"0"+r.getMonth()+"0"+r.getDate()+"0"+r.getHours(),s=t.createElement("link");s.rel="preload",s.as="script",s.href=c,a.appendChild(s);var l=t.createElement("script");l.async=!0,l.src=c,a.appendChild(l)}(window,document,"yektanet");
         </script>
+
 
 
   <style>
@@ -812,6 +812,389 @@
       border-top: 1px solid var(--border2);
       margin: 36px 0;
     }
+    .rich-content .info-box {
+      background: rgba(59,130,246,.07);
+      border: 1px solid rgba(59,130,246,.2);
+      border-right: 4px solid var(--blue);
+      padding: 14px 18px;
+      border-radius: 0 var(--r-xs) var(--r-xs) 0;
+      margin: 20px 0;
+      color: #93c5fd;
+      line-height: 1.7;
+    }
+    .rich-content .warn-box {
+      background: rgba(245,158,11,.07);
+      border: 1px solid rgba(245,158,11,.2);
+      border-right: 4px solid var(--gold);
+      padding: 14px 18px;
+      border-radius: 0 var(--r-xs) var(--r-xs) 0;
+      margin: 20px 0;
+      color: #fcd34d;
+      line-height: 1.7;
+    }
+    .rich-content .success-box {
+      background: rgba(34,197,94,.07);
+      border: 1px solid rgba(34,197,94,.2);
+      border-right: 4px solid var(--accent);
+      padding: 14px 18px;
+      border-radius: 0 var(--r-xs) var(--r-xs) 0;
+      margin: 20px 0;
+      color: var(--accent3);
+      line-height: 1.7;
+    }
+    .rich-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    .rich-content th {
+      background: var(--surface2);
+      color: var(--text);
+      font-weight: 800;
+      padding: 12px 16px;
+      text-align: right;
+      border: 1px solid var(--border2);
+    }
+    .rich-content td {
+      padding: 11px 16px;
+      border: 1px solid var(--border);
+      color: var(--text2);
+    }
+    .rich-content tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+    .rich-content .img-with-caption {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .rich-content .img-with-caption img {
+      max-width: 100%;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--border);
+    }
+    .rich-content .img-with-caption figcaption {
+      font-size: 12px;
+      color: var(--text3);
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .rich-content .article-toc {
+      background: rgba(34,197,94,.05);
+      border: 1px solid rgba(34,197,94,.2);
+      border-radius: 12px;
+      padding: 0;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .toc-toggle-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      cursor: pointer;
+      user-select: none;
+      transition: background .2s;
+    }
+    .toc-toggle-header:hover { background: rgba(34,197,94,.08); }
+    .toc-toggle-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toc-toggle-arrow {
+      color: var(--accent3);
+      font-size: 13px;
+      transition: transform .3s cubic-bezier(.16,1,.3,1);
+      font-style: normal;
+    }
+    .toc-toggle-arrow.open { transform: rotate(180deg); }
+    .toc-body {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .4s cubic-bezier(.16,1,.3,1);
+    }
+    .toc-body.open { max-height: 600px; }
+    .toc-body ol {
+      list-style: none;
+      padding: 4px 20px 16px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+      border-top: 1px solid rgba(34,197,94,.15);
+    }
+    .toc-body ol li a {
+      color: var(--text2) !important;
+      text-decoration: none !important;
+      border-bottom: none !important;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      transition: all .2s;
+    }
+    .toc-body ol li a:hover {
+      background: rgba(34,197,94,.08);
+      color: var(--accent3) !important;
+    }
+    .toc-body ol li.h3 a { padding-right: 20px; font-size: 12px; color: var(--text3) !important; }
+
+    /* ══════════════════════════════════
+       READ PROGRESS BAR
+    ══════════════════════════════════ */
+    #readProgress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      z-index: 9999;
+      transition: width .1s;
+      box-shadow: 0 0 10px rgba(34,197,94,.5);
+    }
+
+    /* ══════════════════════════════════
+       BACK TO TOP
+    ══════════════════════════════════ */
+    #backToTop {
+      position: fixed;
+      bottom: 32px;
+      left: 32px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(34,197,94,.4);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all .3s cubic-bezier(.16,1,.3,1);
+      pointer-events: none;
+    }
+    #backToTop.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+    #backToTop:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(34,197,94,.55); }
+
+    /* ══════════════════════════════════
+       THEME TOGGLE
+    ══════════════════════════════════ */
+    #themeToggle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text2);
+      font-size: 17px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .25s;
+    }
+    #themeToggle:hover { background: var(--surface3); color: var(--text); }
+
+    /* Light theme overrides */
+    body.light-theme {
+      --bg: #f8faf9;
+      --bg2: #f0f5f2;
+      --surface: #ffffff;
+      --surface2: #f3f7f4;
+      --surface3: #e8f0ea;
+      --border: rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.14);
+      --text: #0f1712;
+      --text2: #3a5040;
+      --text3: #7a9882;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.1);
+      --shadow: 0 4px 24px rgba(0,0,0,.1);
+      --shadow-lg: 0 16px 64px rgba(0,0,0,.15);
+    }
+    body.light-theme header { background: rgba(248,250,249,.92); }
+    body.light-theme header.scrolled { background: rgba(248,250,249,.97); }
+    body.light-theme .editor-body-pro, body.light-theme .preview-inner { color: #0f1712; }
+
+    /* ══════════════════════════════════
+       BOOKMARK BUTTON
+    ══════════════════════════════════ */
+    .bookmark-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 22px;
+      border-radius: var(--r-sm);
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      color: var(--text2);
+      transition: all .25s;
+    }
+    .bookmark-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(245,158,11,.07); }
+    .bookmark-btn.saved { background: rgba(245,158,11,.12); border-color: var(--gold); color: var(--gold); }
+
+    /* ══════════════════════════════════
+       COMMENTS
+    ══════════════════════════════════ */
+    .comments-section {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .comments-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 28px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .comment-count {
+      background: rgba(34,197,94,.12);
+      border: 1px solid rgba(34,197,94,.25);
+      color: var(--accent3);
+      padding: 3px 12px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .comment-form {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 22px;
+      margin-bottom: 32px;
+    }
+    .comment-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .comment-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border2);
+      border-radius: var(--r-xs);
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--surface3);
+      outline: none;
+      resize: vertical;
+      min-height: 100px;
+      transition: border-color .2s;
+      margin-bottom: 12px;
+    }
+    .comment-textarea:focus { border-color: var(--accent); }
+    .comment-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      transition: border-color .2s;
+    }
+    .comment-item:hover { border-color: var(--border2); }
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .comment-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .comment-author { font-weight: 800; font-size: 14px; color: var(--text); }
+    .comment-date { font-size: 11px; color: var(--text3); margin-top: 2px; }
+    .comment-body { font-size: 14px; color: var(--text2); line-height: 1.75; }
+
+    /* ══════════════════════════════════
+       RELATED ARTICLES
+    ══════════════════════════════════ */
+    .related-section {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .related-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 24px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .related-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all .3s cubic-bezier(.16,1,.3,1);
+    }
+    .related-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34,197,94,.2);
+      box-shadow: var(--shadow);
+    }
+    .related-thumb {
+      height: 130px;
+      background: var(--surface2);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+    }
+    .related-thumb img { width:100%;height:100%;object-fit:cover;transition:transform .4s; }
+    .related-card:hover .related-thumb img { transform: scale(1.06); }
+    .related-body { padding: 14px; }
+    .related-card-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .related-card-date { font-size: 11px; color: var(--text3); margin-top: 6px; font-weight: 600; }
 
     /* ══════════════════════════════════
        BUTTONS
@@ -1281,6 +1664,499 @@
     .p404-num { font-size: 140px; font-weight: 900; color: var(--surface2); line-height: 1; margin-bottom: 20px; }
 
     /* ══════════════════════════════════
+       ADVANCED EDITOR
+    ══════════════════════════════════ */
+
+    /* Editor Layout */
+    .editor-pro-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border: 1.5px solid var(--border2);
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      background: var(--surface);
+      transition: border-color .2s;
+    }
+    .editor-pro-wrap:focus-within { border-color: var(--accent); }
+    .editor-pro-wrap.split-view {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Top bar with mode toggles */
+    .editor-topbar {
+      grid-column: 1/-1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .editor-mode-btns {
+      display: flex;
+      gap: 4px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xs);
+      padding: 3px;
+    }
+    .mode-btn {
+      padding: 5px 14px;
+      border-radius: 5px;
+      border: none;
+      background: transparent;
+      color: var(--text3);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: all .2s;
+    }
+    .mode-btn.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 1px 6px rgba(34,197,94,.3);
+    }
+    .editor-stats-bar {
+      display: flex;
+      gap: 16px;
+      font-size: 11px;
+      color: var(--text3);
+      font-weight: 600;
+    }
+    .editor-stats-bar span { display: flex; align-items: center; gap: 4px; }
+    .editor-stats-bar .stat-good { color: var(--accent); }
+    .editor-stats-bar .stat-warn { color: var(--gold); }
+    .editor-stats-bar .stat-bad  { color: var(--red); }
+
+    /* Toolbar */
+    .editor-toolbar-pro {
+      grid-column: 1/-1;
+      display: flex;
+      gap: 2px;
+      padding: 8px 12px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .tb-group {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+    .tb-label {
+      font-size: 10px;
+      color: var(--text3);
+      font-weight: 700;
+      padding: 0 6px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    /* Block inserter */
+    .block-inserter {
+      display: flex;
+      gap: 6px;
+      padding: 10px 14px;
+      background: rgba(34,197,94,.03);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      grid-column: 1/-1;
+    }
+    .block-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      color: var(--text2);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: all .2s;
+    }
+    .block-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent3);
+      background: rgba(34,197,94,.06);
+    }
+
+    /* Editor panes */
+    .editor-pane {
+      min-height: 380px;
+      position: relative;
+    }
+    .editor-pane-label {
+      position: absolute;
+      top: 10px;
+      left: 14px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text3);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .editor-body-pro {
+      min-height: 380px;
+      padding: 22px;
+      outline: none;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--text);
+      direction: rtl;
+      height: 100%;
+    }
+    .editor-body-pro:empty::before { content: attr(data-placeholder); color: var(--text3); }
+    .editor-body-pro h1 { font-size:22px;font-weight:900;margin:16px 0 8px;color:var(--text); }
+    .editor-body-pro h2 { font-size:18px;font-weight:800;margin:14px 0 6px;padding-right:12px;border-right:3px solid var(--accent);color:var(--text); }
+    .editor-body-pro h3 { font-size:15px;font-weight:700;margin:12px 0 4px;color:var(--text); }
+    .editor-body-pro blockquote { border-right:4px solid var(--gold);padding:10px 14px;background:rgba(245,158,11,.07);margin:12px 0;border-radius:0 var(--r-xs) var(--r-xs) 0;color:#d6b06a; }
+    .editor-body-pro pre { background:#060b09;color:#a3e6c0;padding:16px;border-radius:var(--r-xs);font-family:monospace;font-size:13px;direction:ltr;text-align:left;margin:12px 0; }
+    .editor-body-pro code { background:rgba(34,197,94,.08);color:var(--accent3);padding:1px 6px;border-radius:4px;font-family:monospace; }
+    .editor-body-pro ul,.editor-body-pro ol { padding-right:24px;margin:8px 0; }
+    .editor-body-pro a { color:var(--accent3);text-decoration:underline; }
+    .editor-body-pro .info-box { background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.25);border-right:4px solid var(--blue);padding:14px 18px;border-radius:0 var(--r-xs) var(--r-xs) 0;margin:12px 0;color:#93c5fd; }
+    .editor-body-pro .warn-box { background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-right:4px solid var(--gold);padding:14px 18px;border-radius:0 var(--r-xs) var(--r-xs) 0;margin:12px 0;color:#fcd34d; }
+    .editor-body-pro .success-box { background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-right:4px solid var(--accent);padding:14px 18px;border-radius:0 var(--r-xs) var(--r-xs) 0;margin:12px 0;color:var(--accent3); }
+    .editor-body-pro table { width:100%;border-collapse:collapse;margin:12px 0;font-size:13px; }
+    .editor-body-pro th { background:var(--surface2);color:var(--text);font-weight:800;padding:10px 14px;text-align:right;border:1px solid var(--border2); }
+    .editor-body-pro td { padding:9px 14px;border:1px solid var(--border);color:var(--text2); }
+    .editor-body-pro tr:nth-child(even) td { background:rgba(255,255,255,.02); }
+
+    /* Preview pane */
+    .preview-pane {
+      border-right: 1px solid var(--border);
+      background: var(--bg2);
+      overflow-y: auto;
+    }
+    .preview-inner {
+      padding: 22px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--text2);
+      direction: rtl;
+    }
+    .preview-inner h1 { font-size:22px;font-weight:900;color:var(--text);margin:16px 0 8px; }
+    .preview-inner h2 { font-size:18px;font-weight:800;color:var(--text);margin:14px 0 6px;padding-right:12px;border-right:3px solid var(--accent); }
+    .preview-inner h3 { font-size:15px;font-weight:700;color:var(--text);margin:12px 0 4px; }
+    .preview-inner blockquote { border-right:4px solid var(--gold);padding:10px 14px;background:rgba(245,158,11,.07);margin:12px 0;color:#d6b06a; }
+    .preview-inner pre { background:#060b09;color:#a3e6c0;padding:16px;border-radius:var(--r-xs);font-family:monospace;font-size:13px;direction:ltr;text-align:left; }
+    .preview-inner code { background:rgba(34,197,94,.08);color:var(--accent3);padding:1px 6px;border-radius:4px;font-family:monospace; }
+    .preview-inner table { width:100%;border-collapse:collapse;font-size:13px;margin:12px 0; }
+    .preview-inner th { background:var(--surface2);color:var(--text);font-weight:800;padding:10px 14px;border:1px solid var(--border2); }
+    .preview-inner td { padding:9px 14px;border:1px solid var(--border);color:var(--text2); }
+
+    /* Editor footer */
+    .editor-footer-pro {
+      grid-column: 1/-1;
+      padding: 8px 16px;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .autosave-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .autosave-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text3);
+      transition: background .3s;
+    }
+    .autosave-dot.saved { background: var(--accent); animation: pulse 1.5s ease-out; }
+    .autosave-dot.saving { background: var(--gold); animation: spin2 .8s linear infinite; }
+    @keyframes spin2 { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* TOC Preview */
+    .toc-preview {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xs);
+      padding: 14px;
+      margin-top: 8px;
+    }
+    .toc-preview-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text3);
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .toc-preview-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 8px;
+      border-radius: 5px;
+      font-size: 13px;
+      color: var(--text2);
+      transition: background .15s;
+    }
+    .toc-preview-item:hover { background: var(--surface3); }
+    .toc-preview-item.h2 { font-weight: 700; color: var(--text); }
+    .toc-preview-item.h3 { padding-right: 20px; font-size: 12px; color: var(--text3); }
+    .toc-count {
+      background: rgba(34,197,94,.15);
+      color: var(--accent3);
+      border-radius: 50px;
+      padding: 1px 8px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    /* SEO Score */
+    .seo-panel {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 18px;
+      margin-top: 16px;
+    }
+    .seo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .seo-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .seo-score-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .seo-score-badge.good { background:rgba(34,197,94,.12);color:var(--accent3);border:1px solid rgba(34,197,94,.25); }
+    .seo-score-badge.ok   { background:rgba(245,158,11,.12);color:#fcd34d;border:1px solid rgba(245,158,11,.25); }
+    .seo-score-badge.bad  { background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.25); }
+    .seo-checks {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .seo-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text2);
+    }
+    .seo-check .icon { font-size: 13px; flex-shrink: 0; }
+    .seo-check.pass .icon::before { content: '✅'; }
+    .seo-check.warn .icon::before { content: '⚠️'; }
+    .seo-check.fail .icon::before { content: '❌'; }
+
+    /* Tags input */
+    .tags-input-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px 12px;
+      border: 1.5px solid var(--border2);
+      border-radius: var(--r-xs);
+      background: var(--surface2);
+      min-height: 46px;
+      cursor: text;
+      align-items: center;
+      transition: border-color .2s;
+    }
+    .tags-input-wrap:focus-within { border-color: var(--accent); }
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(34,197,94,.25);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent3);
+    }
+    .tag-chip .del { cursor:pointer;font-size:14px;color:var(--text3);transition:color .15s; }
+    .tag-chip .del:hover { color: var(--red); }
+    .tags-real-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      min-width: 80px;
+      flex: 1;
+    }
+    .tags-real-input::placeholder { color: var(--text3); }
+
+    /* Article list - advanced */
+    .art-list-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+      transition: all .25s;
+      position: relative;
+    }
+    .art-list-item:hover { border-color: var(--border2); background: var(--surface2); }
+    .art-list-thumb {
+      width: 72px;
+      height: 52px;
+      border-radius: var(--r-xs);
+      overflow: hidden;
+      background: var(--surface2);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .art-list-thumb img { width:100%;height:100%;object-fit:cover; }
+    .art-list-info { flex: 1; min-width: 0; }
+    .art-list-title { font-weight: 700; font-size: 14px; margin-bottom: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
+    .art-list-meta { color: var(--text3); font-size: 11px; display: flex; gap: 10px; flex-wrap: wrap; font-weight: 600; align-items: center; }
+    .art-list-meta .badge { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.2); color: var(--accent3); padding: 2px 8px; border-radius: 50px; font-size: 10px; font-weight: 800; }
+    .art-list-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .art-list-preview { font-size: 12px; color: var(--text3); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* Read time badge */
+    .read-time { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text3); font-weight: 600; }
+
+    /* Slug field */
+    .slug-preview {
+      font-size: 11px;
+      color: var(--text3);
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: monospace;
+      background: var(--surface3);
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    .slug-preview .base { color: var(--text3); }
+    .slug-preview .slug { color: var(--accent3); }
+
+    /* Image caption */
+    .img-with-caption {
+      text-align: center;
+      margin: 12px 0;
+    }
+    .img-with-caption img {
+      max-width: 100%;
+      border-radius: var(--r-xs);
+      border: 1px solid var(--border);
+    }
+    .img-with-caption figcaption {
+      font-size: 12px;
+      color: var(--text3);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* Form sections */
+    .form-section {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    .form-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+    .form-section-header h4 {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-section-toggle {
+      font-size: 12px;
+      color: var(--text3);
+      transition: transform .2s;
+    }
+    .form-section-toggle.open { transform: rotate(180deg); }
+    .form-section-body {
+      padding: 18px;
+    }
+
+    /* Two-column form layout */
+    .form-cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media(max-width:768px){
+      .form-cols-2,.form-cols-3 { grid-template-columns: 1fr; }
+      .editor-pro-wrap.split-view { grid-template-columns: 1fr; }
+    }
+
+    /* Status indicator */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: var(--bg2);
+      border-radius: var(--r-xs);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text3);
+      border: 1px solid var(--border);
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .status-dot.green { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+    .status-dot.yellow { background: var(--gold); }
+    .status-dot.red { background: var(--red); }
+
+    /* ══════════════════════════════════
        AD PLACEHOLDER
     ══════════════════════════════════ */
     .editor-body #pos-article-display-card-116213 {
@@ -1325,6 +2201,9 @@
   const BASE_URL = 'https://mohamadalighane.github.io/daramad-noo/'
 </script>
 
+<div id="readProgress"></div>
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بازگشت به بالا">↑</button>
+
 <!-- HEADER -->
 <header id="hdr">
   <div class="hdr">
@@ -1337,6 +2216,7 @@
     </div>
     <nav class="hdr-nav">
       <button class="nav-link" onclick="go('home')">🏠 خانه</button>
+      <button id="themeToggle" onclick="toggleTheme()" title="تغییر تم">🌙</button>
       <button class="nav-link primary" onclick="go('admin')">⚙ مدیریت</button>
     </nav>
   </div>
@@ -1778,27 +2658,42 @@ async function loadDetail(id) {
         ? `<div class="video-frame"><iframe src="${embed}" allowfullscreen loading="lazy"></iframe></div>`
         : `<a class="video-link-btn" href="${x(a.video_link)}" target="_blank" rel="noopener">▶ مشاهده ویدیو</a>`)
     : ''
+
+  const isBookmarked = isArticleBookmarked(a.id)
+  const wc = calcWordCount(a.full_content || '')
+  const readMin = Math.max(1, Math.ceil(wc / 200))
+
   body.innerHTML = `
     ${a.image ? `<img class="detail-img" src="${x(a.image)}" alt="${x(a.title)}" loading="lazy">` : ''}
     <h1 class="detail-title">${x(a.title)}</h1>
     <div class="detail-meta">
       <span class="detail-meta-item">📅 ${fd(a.created_at)}</span>
+      <span class="detail-meta-item">⏱ ${readMin} دقیقه مطالعه</span>
+      <span class="detail-meta-item">📝 ${wc} کلمه</span>
       ${a.category ? `<span class="detail-badge">${x(a.category)}</span>` : ''}
     </div>
     <div class="detail-actions">
       <button class="btn btn-primary" onclick="downloadPDF()">📄 دانلود PDF</button>
+      <button class="bookmark-btn ${isBookmarked ? 'saved' : ''}" id="bookmarkBtn" onclick="toggleBookmark(${a.id},'${x(a.title)}','${x(a.image||'')}')">
+        ${isBookmarked ? '🔖 ذخیره شده' : '🔖 ذخیره'}
+      </button>
       <button class="btn btn-ghost" onclick="copyLink()" id="copyLinkBtn">🔗 کپی لینک</button>
       <a class="btn btn-ghost" id="shareWa" href="" target="_blank" rel="noopener">📲 واتساپ</a>
       <a class="btn btn-ghost" id="shareTg" href="" target="_blank" rel="noopener">✈️ تلگرام</a>
     </div>
     ${videoHtml}
-    <div class="rich-content" id="articleContent">${processContent(a.full_content)}</div>`
+    <div class="rich-content" id="articleContent">${processContent(a.full_content)}</div>
+    <div id="relatedSection"></div>
+    <div id="commentsSection"></div>`
+
   window._currentArticle = a
   const url = encodeURIComponent(location.origin + location.pathname + '?article=' + a.id)
   const txt = encodeURIComponent(a.title + ' | ' + getSiteSettings().siteName)
   document.getElementById('shareWa').href = `https://wa.me/?text=${txt}%20${url}`
   document.getElementById('shareTg').href = `https://t.me/share/url?url=${url}&text=${txt}`
+
   setTimeout(() => {
+    // Code copy buttons
     document.querySelectorAll('#articleContent pre').forEach(pre => {
       const wrap = document.createElement('div'); wrap.className = 'code-block'
       pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre)
@@ -1806,7 +2701,234 @@ async function loadDetail(id) {
       btn.onclick = () => { navigator.clipboard.writeText(pre.textContent); btn.textContent = '✅ کپی شد'; setTimeout(() => btn.textContent = '📋 کپی', 2000) }
       wrap.appendChild(btn)
     })
-  }, 100)
+
+    // Make article-toc collapsible
+    document.querySelectorAll('#articleContent .article-toc').forEach(toc => {
+      const titleEl = toc.querySelector('div')
+      const listEl  = toc.querySelector('ol')
+      if (!titleEl || !listEl) return
+      // Wrap in toggle structure
+      toc.innerHTML = `
+        <div class="toc-toggle-header" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.toc-toggle-arrow').classList.toggle('open')">
+          <div class="toc-toggle-title">${titleEl.innerHTML}</div>
+          <span class="toc-toggle-arrow">▾</span>
+        </div>
+        <div class="toc-body open">
+          <ol>${listEl.innerHTML}</ol>
+        </div>`
+      // Add h3 class to indented items
+      toc.querySelectorAll('.toc-body ol li.h3').forEach(li => {
+        const a = li.querySelector('a')
+        if (a) a.style.paddingRight = '20px'
+      })
+    })
+
+    // Heading anchor links
+    document.querySelectorAll('#articleContent h2, #articleContent h3').forEach(h => {
+      if (!h.id) return
+      h.style.cursor = 'pointer'
+      h.title = 'کلیک برای کپی لینک'
+      h.onclick = () => {
+        navigator.clipboard.writeText(location.href.split('#')[0] + '#' + h.id)
+        toast('لینک کپی شد ✓', 'ok')
+      }
+    })
+
+    // Load related articles
+    loadRelatedArticles(a)
+    // Load comments
+    renderComments(a.id)
+    // Init read progress
+    initReadProgress()
+  }, 120)
+}
+
+// ══════════════════════════════════════════
+//  COLLAPSIBLE TOC in generator too
+// ══════════════════════════════════════════
+// Override generateTOCHtml to produce collapsible version
+window._generateTOCHtml = function(toc) {
+  if (!toc || !toc.length) return null
+  const items = toc.map(item =>
+    `<li class="${item.tag}">
+      <a href="#${item.id}" style="color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;transition:all .2s;" 
+         ${item.tag==='h3'?'style="padding-right:20px"':''}>
+        <span style="color:var(--accent3);font-size:10px">${item.tag==='h2'?'■':'○'}</span>${item.text}
+      </a>
+    </li>`
+  ).join('')
+  return `<nav class="article-toc">
+    <div class="toc-toggle-header" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.toc-toggle-arrow').classList.toggle('open')">
+      <div class="toc-toggle-title">📑 فهرست مطالب</div>
+      <span class="toc-toggle-arrow open">▾</span>
+    </div>
+    <div class="toc-body open">
+      <ol>${items}</ol>
+    </div>
+  </nav><p><br></p>`
+}
+
+// ══════════════════════════════════════════
+//  READ PROGRESS
+// ══════════════════════════════════════════
+function initReadProgress() {
+  const bar = document.getElementById('readProgress')
+  if (!bar) return
+  bar.style.width = '0%'
+  const updateProgress = () => {
+    const content = document.getElementById('articleContent')
+    if (!content) return
+    const rect = content.getBoundingClientRect()
+    const contentHeight = content.offsetHeight
+    const scrolled = Math.max(0, -rect.top)
+    const pct = Math.min(100, (scrolled / (contentHeight - window.innerHeight + 200)) * 100)
+    bar.style.width = Math.max(0, pct) + '%'
+  }
+  window.removeEventListener('scroll', window._progressHandler)
+  window._progressHandler = updateProgress
+  window.addEventListener('scroll', updateProgress, { passive: true })
+}
+
+// ══════════════════════════════════════════
+//  BOOKMARKS
+// ══════════════════════════════════════════
+const BM_KEY = 'daramad_bookmarks'
+function getBookmarks() { try { return JSON.parse(localStorage.getItem(BM_KEY)) || [] } catch { return [] } }
+function saveBookmarks(b) { localStorage.setItem(BM_KEY, JSON.stringify(b)) }
+function isArticleBookmarked(id) { return getBookmarks().some(b => b.id == id) }
+
+function toggleBookmark(id, title, image) {
+  const bms = getBookmarks()
+  const btn = document.getElementById('bookmarkBtn')
+  const idx = bms.findIndex(b => b.id == id)
+  if (idx >= 0) {
+    bms.splice(idx, 1)
+    saveBookmarks(bms)
+    if (btn) { btn.textContent = '🔖 ذخیره'; btn.classList.remove('saved') }
+    toast('از نشانک‌ها حذف شد', 'ok')
+  } else {
+    bms.unshift({ id, title, image, savedAt: Date.now() })
+    saveBookmarks(bms)
+    if (btn) { btn.innerHTML = '🔖 ذخیره شده'; btn.classList.add('saved') }
+    toast('مقاله ذخیره شد 🔖', 'ok')
+  }
+}
+
+// ══════════════════════════════════════════
+//  RELATED ARTICLES
+// ══════════════════════════════════════════
+async function loadRelatedArticles(article) {
+  const section = document.getElementById('relatedSection')
+  if (!section || !sbReady) return
+  let q = sb.from('articles').select('id,title,image,created_at,category').neq('id', article.id).limit(6)
+  if (article.category) q = q.eq('category', article.category)
+  const { data } = await q
+  let related = data || []
+  // If not enough with same category, get any
+  if (related.length < 3 && article.category) {
+    const { data: more } = await sb.from('articles').select('id,title,image,created_at,category')
+      .neq('id', article.id).limit(6)
+    related = [...related, ...(more || []).filter(m => !related.find(r => r.id === m.id))].slice(0, 4)
+  }
+  if (!related.length) return
+  section.innerHTML = `
+    <div class="related-section">
+      <div class="related-title">📚 مقالات مرتبط</div>
+      <div class="related-grid">
+        ${related.slice(0,4).map(r => `
+          <div class="related-card" onclick="go('detail',${r.id})">
+            <div class="related-thumb">
+              ${r.image
+                ? `<img src="${x(r.image)}" alt="${x(r.title)}" loading="lazy" onerror="this.parentElement.textContent='📄'">`
+                : '📄'}
+            </div>
+            <div class="related-body">
+              <div class="related-card-title">${x(r.title)}</div>
+              <div class="related-card-date">📅 ${fd(r.created_at)}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`
+}
+
+// ══════════════════════════════════════════
+//  COMMENTS (localStorage)
+// ══════════════════════════════════════════
+function getComments(articleId) {
+  try { return JSON.parse(localStorage.getItem('comments_' + articleId)) || [] } catch { return [] }
+}
+function saveComments(articleId, comments) {
+  localStorage.setItem('comments_' + articleId, JSON.stringify(comments))
+}
+
+function renderComments(articleId) {
+  const section = document.getElementById('commentsSection')
+  if (!section) return
+  const comments = getComments(articleId)
+  section.innerHTML = `
+    <div class="comments-section">
+      <div class="comments-title">
+        💬 نظرات
+        <span class="comment-count">${comments.length}</span>
+      </div>
+      <div class="comment-form">
+        <div class="comment-form-grid">
+          <input class="f-input" id="cName" placeholder="نام شما *" style="font-size:13px">
+          <input class="f-input" id="cEmail" placeholder="ایمیل (اختیاری)" style="font-size:13px">
+        </div>
+        <textarea class="comment-textarea" id="cText" placeholder="نظر خود را بنویسید..."></textarea>
+        <button class="btn btn-primary" onclick="submitComment(${articleId})">ارسال نظر ✓</button>
+      </div>
+      <div id="commentsList">
+        ${comments.length === 0
+          ? `<div style="text-align:center;padding:32px;color:var(--text3)">
+              <div style="font-size:36px;margin-bottom:10px">💬</div>
+              <p>اولین نفری باشید که نظر می‌دهد</p>
+            </div>`
+          : comments.map(c => `
+            <div class="comment-item">
+              <div class="comment-header">
+                <div class="comment-avatar">${c.name.charAt(0)}</div>
+                <div>
+                  <div class="comment-author">${x(c.name)}</div>
+                  <div class="comment-date">${new Date(c.date).toLocaleDateString('fa-IR')}</div>
+                </div>
+              </div>
+              <div class="comment-body">${x(c.text)}</div>
+            </div>`).join('')
+        }
+      </div>
+    </div>`
+}
+
+function submitComment(articleId) {
+  const name = document.getElementById('cName')?.value.trim()
+  const text = document.getElementById('cText')?.value.trim()
+  if (!name) { toast('نام را وارد کنید', 'err'); return }
+  if (!text) { toast('متن نظر را بنویسید', 'err'); return }
+  const comments = getComments(articleId)
+  comments.unshift({ name, text, date: Date.now(), id: Date.now() })
+  saveComments(articleId, comments)
+  renderComments(articleId)
+  toast('نظر شما ثبت شد ✓', 'ok')
+}
+
+// ══════════════════════════════════════════
+//  THEME TOGGLE
+// ══════════════════════════════════════════
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light-theme')
+  localStorage.setItem('daramad_theme', isLight ? 'light' : 'dark')
+  const btn = document.getElementById('themeToggle')
+  if (btn) btn.textContent = isLight ? '☀️' : '🌙'
+}
+function loadTheme() {
+  const saved = localStorage.getItem('daramad_theme')
+  if (saved === 'light') {
+    document.body.classList.add('light-theme')
+    const btn = document.getElementById('themeToggle')
+    if (btn) btn.textContent = '☀️'
+  }
 }
 
 function processContent(html) {
@@ -1997,129 +3119,311 @@ async function renderArticlesList(c) {
   c.innerHTML = spinning(true)
   const { data, error } = await sb.from('articles').select('*').order('created_at', { ascending: false })
   if (error) { c.innerHTML = errHtml(error.message); return }
-  const newBtn = `<div style="margin-bottom:20px"><button class="btn btn-primary" onclick="showAdminPanel('new-article')">✏️ مقاله جدید</button></div>`
+
+  const totalCount = data.length
+  const cats = [...new Set(data.map(r => r.category).filter(Boolean))]
+
+  const header = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="showAdminPanel('new-article')">✏️ مقاله جدید</button>
+        <div class="status-bar">
+          <span class="status-dot green"></span>
+          <span>${totalCount} مقاله</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <div style="position:relative">
+          <input id="listSearch" class="f-input" placeholder="🔍 جستجو..." style="padding:8px 14px;font-size:13px;width:200px"
+            oninput="filterArticleList(this.value)">
+        </div>
+        <select id="listCatFilter" class="f-select" style="padding:8px 14px;font-size:13px;width:auto"
+          onchange="filterArticleList(document.getElementById('listSearch').value)">
+          <option value="">همه دسته‌ها</option>
+          ${cats.map(c => `<option value="${x(c)}">${x(c)}</option>`).join('')}
+        </select>
+      </div>
+    </div>`
+
   if (!data.length) {
-    c.innerHTML = newBtn + `<div class="panel"><div style="text-align:center;padding:40px;color:var(--text3)"><div style="font-size:48px;margin-bottom:12px">📂</div><p>هنوز مقاله‌ای ندارید</p></div></div>`
+    c.innerHTML = header + `<div class="panel"><div style="text-align:center;padding:56px;color:var(--text3)"><div style="font-size:56px;margin-bottom:16px">📂</div><h3 style="color:var(--text2);margin-bottom:8px">هنوز مقاله‌ای ندارید</h3><p>اولین مقاله را بنویسید</p></div></div>`
     return
   }
-  c.innerHTML = newBtn + `<div class="panel">` +
-    data.map(a => `
-      <div class="list-item">
-        <div class="list-thumb">${a.image ? `<img src="${x(a.image)}" onerror="this.parentElement.textContent='📄'">` : '📄'}</div>
-        <div class="list-info">
-          <div class="list-title">${x(a.title)}</div>
-          <div class="list-meta"><span>📅 ${fd(a.created_at)}</span>${a.category ? `<span>🏷 ${x(a.category)}</span>` : ''}</div>
+
+  const listHtml = data.map(a => {
+    const wc = calcWordCount(a.full_content || '')
+    const readMin = Math.max(1, Math.ceil(wc / 200))
+    const strippedDesc = stripHtml(a.short_description || '').substring(0, 100)
+    return `
+    <div class="art-list-item" data-title="${x(a.title).toLowerCase()}" data-cat="${x(a.category || '')}">
+      <div class="art-list-thumb">${a.image
+        ? `<img src="${x(a.image)}" onerror="this.parentElement.textContent='📄'" loading="lazy">`
+        : '📄'}</div>
+      <div class="art-list-info">
+        <div class="art-list-title" title="${x(a.title)}">${x(a.title)}</div>
+        <div class="art-list-preview">${x(strippedDesc)}</div>
+        <div class="art-list-meta" style="margin-top:6px">
+          <span>📅 ${fd(a.created_at)}</span>
+          ${a.category ? `<span class="badge">${x(a.category)}</span>` : ''}
+          <span class="read-time">⏱ ${readMin} دقیقه</span>
+          <span>${wc} کلمه</span>
         </div>
-        <div class="list-actions">
-          <button class="btn btn-ghost" style="padding:7px 12px;font-size:12px" onclick="go('detail',${a.id})">👁</button>
-          <button class="btn btn-warn" style="font-size:12px" onclick="editArticle(${a.id})">✏ ویرایش</button>
-          <button class="btn btn-danger" style="font-size:12px" onclick="deleteArticle(${a.id})">🗑</button>
-        </div>
-      </div>`).join('') + `</div>`
+      </div>
+      <div class="art-list-actions">
+        <button class="btn btn-ghost" style="padding:7px 12px;font-size:12px" title="پیش‌نمایش" onclick="go('detail',${a.id})">👁</button>
+        <button class="btn btn-warn" style="font-size:12px" title="ویرایش" onclick="editArticle(${a.id})">✏ ویرایش</button>
+        <button class="btn btn-danger" style="font-size:12px" title="حذف" onclick="deleteArticle(${a.id})">🗑</button>
+      </div>
+    </div>`
+  }).join('')
+
+  c.innerHTML = header + `<div class="panel" id="artListPanel">${listHtml}</div>`
+  window._allArticleListItems = data
+}
+
+function filterArticleList(q) {
+  const catVal = document.getElementById('listCatFilter')?.value || ''
+  document.querySelectorAll('.art-list-item').forEach(el => {
+    const titleMatch = el.dataset.title.includes((q || '').toLowerCase())
+    const catMatch = !catVal || el.dataset.cat === catVal
+    el.style.display = (titleMatch && catMatch) ? '' : 'none'
+  })
+}
+
+function calcWordCount(html) {
+  return (stripHtml(html || '')).trim().split(/\s+/).filter(w => w).length
 }
 
 function renderArticleForm(c, article = null) {
   const isEdit = !!article
+  window._editorMode = 'write'
+  window._autoSaveTimer = null
+  window._articleTags = isEdit ? (article.tags ? (typeof article.tags === 'string' ? article.tags.split(',').filter(Boolean) : article.tags) : []) : []
+
   c.innerHTML = `
-    <div class="panel">
-      <div class="panel-title">${isEdit ? '✏️ ویرایش مقاله' : '✏️ مقاله جدید'}</div>
-      <div class="alert alert-err" id="formErr"></div>
-      <div class="alert alert-ok"  id="formOk"></div>
-      <input type="hidden" id="editId" value="${isEdit ? article.id : ''}">
-      <div class="f-grid">
-        <div class="f-group f-full">
-          <label class="f-label">عنوان مقاله *</label>
-          <input class="f-input" id="fTitle" placeholder="عنوان مقاله" value="${isEdit ? x(article.title) : ''}">
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start">
+    <div>
+      <div class="form-section">
+        <div class="form-section-header" onclick="toggleSection('sec-main')">
+          <h4>📝 اطلاعات اصلی</h4>
+          <span class="form-section-toggle open" id="toggle-sec-main">▾</span>
         </div>
-        <div class="f-group f-full">
-          <label class="f-label">تصویر مقاله</label>
-          <div class="upload-area">
-            <input type="file" id="fImageFile" accept="image/*" onchange="handleImageFile(this)">
-            <div id="uploadPlaceholder">
-              <div style="font-size:28px;margin-bottom:6px">🖼</div>
-              <div style="font-size:13px;font-weight:600;color:var(--text2)">عکس را بکش یا کلیک کن</div>
-              <div style="font-size:11px;color:var(--text3);margin-top:3px">JPG، PNG — حداکثر ۵ مگابایت</div>
+        <div class="form-section-body" id="sec-main">
+          <div class="f-group" style="margin-bottom:12px">
+            <label class="f-label">عنوان مقاله *</label>
+            <input class="f-input" id="fTitle" placeholder="عنوان جذاب برای مقاله..."
+              value="${isEdit ? x(article.title) : ''}"
+              oninput="onTitleInput(this.value)" style="font-size:16px;font-weight:700">
+            <div class="slug-preview" id="slugPreview">
+              <span class="base">📎 slug: </span>
+              <span class="slug" id="slugVal">${isEdit ? slugify(article.title||'') : 'عنوان-مقاله'}</span>
             </div>
-            <img id="uploadPreview" class="upload-preview" ${isEdit && article.image ? `src="${x(article.image)}" style="display:block"` : ''}>
-            <div class="upload-bar-wrap" id="uploadBarWrap"><div class="upload-bar" id="uploadBar"></div></div>
           </div>
-          <div style="margin-top:10px;display:flex;align-items:center;gap:10px">
-            <span style="font-size:12px;color:var(--text3);white-space:nowrap">یا لینک:</span>
-            <input class="f-input" id="fImageUrl" type="url" placeholder="https://..." oninput="onImageUrlInput(this.value)" value="${isEdit ? x(article.image || '') : ''}">
-          </div>
-          <input type="hidden" id="fImageFinal" value="${isEdit ? x(article.image || '') : ''}">
-        </div>
-        <div class="f-group">
-          <label class="f-label">لینک ویدیو</label>
-          <input class="f-input" id="fVideo" type="url" placeholder="https://youtube.com/..." value="${isEdit ? x(article.video_link || '') : ''}">
-        </div>
-        <div class="f-group">
-          <label class="f-label">دسته‌بندی</label>
-          <select class="f-select" id="fCat"></select>
-          <div class="cat-manager">
-            <div class="cat-manager-title">مدیریت دسته‌بندی‌ها</div>
-            <div class="cat-tags" id="catTagsAdmin"></div>
-            <div class="cat-add-row">
-              <input class="cat-add-input" id="newCatInput" placeholder="دسته جدید..."
-                onkeydown="if(event.key==='Enter'){event.preventDefault();addCategory()}">
-              <button class="cat-add-btn" onclick="addCategory()">+ اضافه</button>
+          <div class="f-group" style="margin-bottom:0">
+            <label class="f-label">توضیح کوتاه (Meta Description) *</label>
+            <input class="f-input" id="fShort" placeholder="خلاصه‌ای جذاب — ۱۲۰ تا ۱۵۶ کاراکتر توصیه می‌شود"
+              value="${isEdit ? x(article.short_description) : ''}"
+              oninput="updateSEOScore()">
+            <div style="display:flex;justify-content:space-between;margin-top:5px">
+              <span style="font-size:11px;color:var(--text3)">برای نمایش در گوگل استفاده می‌شود</span>
+              <span id="metaLen" style="font-size:11px;color:var(--text3)">0 کاراکتر</span>
             </div>
           </div>
         </div>
-        <div class="f-group f-full">
-          <label class="f-label">توضیح کوتاه *</label>
-          <input class="f-input" id="fShort" placeholder="یک جمله خلاصه" value="${isEdit ? x(article.short_description) : ''}">
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-header" onclick="toggleSection('sec-editor')">
+          <h4>✍️ محتوای مقاله *</h4>
+          <span class="form-section-toggle open" id="toggle-sec-editor">▾</span>
         </div>
-        <div class="f-group f-full">
-          <label class="f-label">متن کامل مقاله *</label>
-          <div class="editor-wrap">
-            <div class="editor-toolbar">
-              <select class="tb-select" onchange="execCmd('formatBlock',this.value);this.value='p'">
-                <option value="p">متن عادی</option>
-                <option value="h1">عنوان ۱</option>
-                <option value="h2">عنوان ۲</option>
-                <option value="h3">عنوان ۳</option>
-              </select>
+        <div class="form-section-body" id="sec-editor" style="padding:0">
+          <div class="editor-pro-wrap" id="editorProWrap">
+            <div class="editor-topbar">
+              <div class="editor-mode-btns">
+                <button class="mode-btn active" id="modeWrite" onclick="setEditorMode('write')">✍️ نوشتن</button>
+                <button class="mode-btn" id="modeSplit" onclick="setEditorMode('split')">⬛ دو نما</button>
+                <button class="mode-btn" id="modePreview" onclick="setEditorMode('preview')">👁 پیش‌نمایش</button>
+              </div>
+              <div class="editor-stats-bar">
+                <span id="eWords">0 کلمه</span>
+                <span id="eReadTime">⏱ 0 دقیقه</span>
+                <span id="eChars">0 کاراکتر</span>
+                <span id="eTOCCount" class="stat-good"></span>
+              </div>
+            </div>
+            <div class="editor-toolbar-pro" id="editorToolbar">
+              <div class="tb-group">
+                <select class="tb-select" onchange="execCmd2('formatBlock',this.value);this.value='p'">
+                  <option value="p">متن</option>
+                  <option value="h1">H1</option>
+                  <option value="h2">H2</option>
+                  <option value="h3">H3</option>
+                </select>
+              </div>
               <div class="tb-sep"></div>
-              <button class="tb-btn" onclick="execCmd('bold')" title="بولد"><b>B</b></button>
-              <button class="tb-btn" onclick="execCmd('italic')" title="ایتالیک"><i>I</i></button>
-              <button class="tb-btn" onclick="execCmd('underline')" title="خط زیر"><u>U</u></button>
-              <button class="tb-btn" onclick="execCmd('strikeThrough')" title="خط وسط"><s>S</s></button>
+              <button class="tb-btn" onclick="execCmd2('bold')" title="بولد"><b>B</b></button>
+              <button class="tb-btn" onclick="execCmd2('italic')" title="ایتالیک"><i>I</i></button>
+              <button class="tb-btn" onclick="execCmd2('underline')" title="خط زیر"><u>U</u></button>
+              <button class="tb-btn" onclick="execCmd2('strikeThrough')" title="خط وسط"><s>S</s></button>
               <div class="tb-sep"></div>
-              <button class="tb-btn" onclick="execCmd('insertUnorderedList')" title="لیست نقطه‌ای">☰</button>
-              <button class="tb-btn" onclick="execCmd('insertOrderedList')" title="لیست شماره‌ای">1.</button>
+              <button class="tb-btn" onclick="execCmd2('insertUnorderedList')" title="لیست نقطه‌ای">☰</button>
+              <button class="tb-btn" onclick="execCmd2('insertOrderedList')" title="لیست شماره‌ای">1.</button>
               <div class="tb-sep"></div>
-              <button class="tb-btn" onclick="insertBlockquote()" title="نقل‌قول">❝</button>
-              <button class="tb-btn" onclick="insertCode()" title="کد inline">{ }</button>
-              <button class="tb-btn" onclick="insertCodeBlock()" title="بلاک کد">📋</button>
-              <button class="tb-btn" onclick="insertHR()" title="خط جدا">—</button>
-              <button class="tb-btn" onclick="insertAd()" title="درج تبلیغ">📢</button>
+              <button class="tb-btn" onclick="insertBlock('quote')" title="نقل‌قول">❝</button>
+              <button class="tb-btn" onclick="insertBlock('code-inline')" title="کد inline">{ }</button>
+              <button class="tb-btn" onclick="insertBlock('code-block')" title="بلاک کد">⌨</button>
+              <button class="tb-btn" onclick="insertBlock('hr')" title="خط جدا">—</button>
+              <div class="tb-sep"></div>
+              <button class="tb-btn" onclick="insertBlock('info')" title="باکس اطلاعات" style="font-size:15px">ℹ</button>
+              <button class="tb-btn" onclick="insertBlock('warn')" title="باکس هشدار" style="font-size:15px">⚠</button>
+              <button class="tb-btn" onclick="insertBlock('success')" title="باکس موفقیت" style="font-size:15px">✅</button>
+              <button class="tb-btn" onclick="insertBlock('table')" title="جدول">⊞</button>
+              <div class="tb-sep"></div>
+              <button class="tb-btn" onclick="insertBlock('toc')" title="فهرست مطالب خودکار" style="background:rgba(34,197,94,.1);color:var(--accent3)">📑 TOC</button>
+              <button class="tb-btn" onclick="insertBlock('ad')" title="جایگاه تبلیغ">📢</button>
               <div class="tb-sep"></div>
               <button class="tb-btn" onclick="openLinkModal()" title="لینک">🔗</button>
-              <button class="tb-btn" onclick="execCmd('unlink')" title="حذف لینک">🚫</button>
+              <button class="tb-btn" onclick="execCmd2('unlink')" title="حذف لینک">🚫</button>
+              <button class="tb-btn" onclick="openInlineImageModal()" title="تصویر در متن">🖼</button>
               <div class="tb-sep"></div>
-              <button class="tb-btn" onclick="execCmd('justifyRight')" title="راست">⇥</button>
-              <button class="tb-btn" onclick="execCmd('justifyCenter')" title="وسط">≡</button>
-              <button class="tb-btn" onclick="execCmd('justifyLeft')" title="چپ">⇤</button>
+              <button class="tb-btn" onclick="execCmd2('justifyRight')">⇥</button>
+              <button class="tb-btn" onclick="execCmd2('justifyCenter')">≡</button>
+              <button class="tb-btn" onclick="execCmd2('justifyLeft')">⇤</button>
               <div class="tb-sep"></div>
-              <button class="tb-btn" onclick="execCmd('undo')" title="واگرد">↩</button>
-              <button class="tb-btn" onclick="execCmd('redo')" title="انجام مجدد">↪</button>
+              <button class="tb-btn" onclick="execCmd2('undo')">↩</button>
+              <button class="tb-btn" onclick="execCmd2('redo')">↪</button>
+              <button class="tb-btn" onclick="clearEditorFormatting()" style="color:var(--red)" title="پاک کردن قالب">✕F</button>
             </div>
-            <div class="editor-body" id="editorBody" contenteditable="true"
-              data-placeholder="متن مقاله را اینجا بنویسید..."
-              oninput="updateWordCount()">${isEdit ? (article.full_content || '') : ''}</div>
-            <div class="editor-footer">
-              <span id="wordCount">۰ کلمه</span>
-              <span>Ctrl+B بولد | Ctrl+I ایتالیک</span>
+            <div style="display:flex;min-height:420px">
+              <div class="editor-pane" id="writePanelWrap" style="flex:1">
+                <div class="editor-body-pro" id="editorBody" contenteditable="true"
+                  data-placeholder="متن مقاله را اینجا بنویسید... (H2 و H3 ها به فهرست خودکار تبدیل می‌شوند)"
+                  oninput="onEditorInput()"
+                  >${isEdit ? (article.full_content || '') : ''}</div>
+              </div>
+              <div class="editor-pane preview-pane" id="previewPanelWrap" style="flex:1;display:none">
+                <div class="editor-pane-label">پیش‌نمایش</div>
+                <div class="preview-inner" id="previewBody"></div>
+              </div>
             </div>
+            <div class="editor-footer-pro">
+              <div class="autosave-indicator">
+                <div class="autosave-dot" id="autoSaveDot"></div>
+                <span id="autoSaveText">آماده</span>
+              </div>
+              <div style="display:flex;gap:16px;font-size:11px;color:var(--text3)">
+                <span>Ctrl+B بولد</span><span>Ctrl+I ایتالیک</span><span>Ctrl+S ذخیره</span>
+              </div>
+            </div>
+          </div>
+          <div class="toc-preview" id="tocPreviewPanel" style="display:none;margin:12px 12px 0">
+            <div class="toc-preview-title">
+              📑 پیش‌نمایش فهرست مطالب
+              <span class="toc-count" id="tocItemCount">0 آیتم</span>
+            </div>
+            <div id="tocPreviewList"></div>
           </div>
         </div>
       </div>
-      <div style="display:flex;gap:10px;margin-top:24px">
-        <button class="btn btn-primary" id="saveBtn" onclick="saveArticle()">💾 ذخیره مقاله</button>
-        <button class="btn btn-ghost" onclick="showAdminPanel('articles')">انصراف</button>
+    </div>
+
+    <div>
+      <input type="hidden" id="editId" value="${isEdit ? article.id : ''}">
+      <div class="alert alert-err" id="formErr" style="margin-bottom:12px"></div>
+      <div class="alert alert-ok" id="formOk" style="margin-bottom:12px"></div>
+
+      <div class="panel" style="padding:16px;margin-bottom:16px">
+        <button class="btn btn-primary" id="saveBtn" onclick="saveArticle()"
+          style="width:100%;justify-content:center;padding:14px;font-size:15px;font-weight:900">
+          💾 ذخیره مقاله
+        </button>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn btn-ghost" onclick="showAdminPanel('articles')" style="flex:1;justify-content:center;font-size:12px">انصراف</button>
+          ${isEdit ? `<button class="btn btn-ghost" onclick="go('detail',${article.id})" style="flex:1;justify-content:center;font-size:12px">👁 مشاهده</button>` : ''}
+        </div>
       </div>
-    </div>`
+
+      <div class="form-section">
+        <div class="form-section-header" onclick="toggleSection('sec-media')">
+          <h4>🖼 تصویر و رسانه</h4>
+          <span class="form-section-toggle open" id="toggle-sec-media">▾</span>
+        </div>
+        <div class="form-section-body" id="sec-media">
+          <div class="f-group" style="margin-bottom:10px">
+            <div class="upload-area" style="padding:20px">
+              <input type="file" id="fImageFile" accept="image/*" onchange="handleImageFile(this)">
+              <div id="uploadPlaceholder" ${isEdit && article.image ? 'style="display:none"' : ''}>
+                <div style="font-size:24px;margin-bottom:6px">🖼</div>
+                <div style="font-size:12px;font-weight:600;color:var(--text2)">تصویر شاخص</div>
+                <div style="font-size:11px;color:var(--text3);margin-top:2px">JPG/PNG — حداکثر ۵MB</div>
+              </div>
+              <img id="uploadPreview" class="upload-preview" ${isEdit && article.image ? `src="${x(article.image)}" style="display:block"` : ''}>
+              <div class="upload-bar-wrap" id="uploadBarWrap"><div class="upload-bar" id="uploadBar"></div></div>
+            </div>
+          </div>
+          <div class="f-group" style="margin-bottom:10px">
+            <label class="f-label" style="font-size:11px">یا لینک تصویر</label>
+            <input class="f-input" id="fImageUrl" type="url" placeholder="https://..." oninput="onImageUrlInput(this.value)"
+              value="${isEdit ? x(article.image || '') : ''}" style="font-size:13px">
+          </div>
+          <input type="hidden" id="fImageFinal" value="${isEdit ? x(article.image || '') : ''}">
+          <div class="f-group" style="margin-bottom:0">
+            <label class="f-label" style="font-size:11px">لینک ویدیو (یوتیوب/آپارات)</label>
+            <input class="f-input" id="fVideo" type="url" placeholder="https://youtube.com/..."
+              value="${isEdit ? x(article.video_link || '') : ''}" style="font-size:13px">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-header" onclick="toggleSection('sec-cat')">
+          <h4>🏷 دسته‌بندی و تگ‌ها</h4>
+          <span class="form-section-toggle open" id="toggle-sec-cat">▾</span>
+        </div>
+        <div class="form-section-body" id="sec-cat">
+          <div class="f-group" style="margin-bottom:12px">
+            <label class="f-label" style="font-size:11px">دسته‌بندی</label>
+            <select class="f-select" id="fCat" style="font-size:13px"></select>
+            <div class="cat-manager" style="margin-top:8px">
+              <div class="cat-manager-title">مدیریت</div>
+              <div class="cat-tags" id="catTagsAdmin"></div>
+              <div class="cat-add-row">
+                <input class="cat-add-input" id="newCatInput" placeholder="دسته جدید..."
+                  onkeydown="if(event.key==='Enter'){event.preventDefault();addCategory()}">
+                <button class="cat-add-btn" onclick="addCategory()">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="f-group" style="margin-bottom:0">
+            <label class="f-label" style="font-size:11px">تگ‌ها (Enter یا کاما)</label>
+            <div class="tags-input-wrap" id="tagsWrap" onclick="document.getElementById('tagInput').focus()">
+              <div id="tagChips"></div>
+              <input id="tagInput" class="tags-real-input" placeholder="تگ بزنید..."
+                onkeydown="handleTagInput(event)">
+            </div>
+            <input type="hidden" id="fTags">
+          </div>
+        </div>
+      </div>
+
+      <div class="seo-panel" id="seoPanel">
+        <div class="seo-header">
+          <div class="seo-title">🔍 امتیاز سئو</div>
+          <div class="seo-score-badge bad" id="seoBadge">۰/۱۰۰</div>
+        </div>
+        <div class="seo-checks" id="seoChecks">
+          <div class="seo-check fail"><span class="icon"></span><span>عنوان را وارد کنید</span></div>
+        </div>
+      </div>
+
+      <div class="toc-preview" id="tocSidePanel" style="margin-top:16px;display:none">
+        <div class="toc-preview-title">📑 فهرست مطالب <span class="toc-count" id="tocSideCount">0</span></div>
+        <div id="tocSideList"></div>
+      </div>
+    </div>
+  </div>`
+
   renderCatSelect()
   renderCatAdmin()
   if (isEdit && article.category) {
@@ -2130,8 +3434,299 @@ function renderArticleForm(c, article = null) {
     const ph = document.getElementById('uploadPlaceholder')
     if (ph) ph.style.display = 'none'
   }
-  updateWordCount()
+  renderTags()
+  onEditorInput()
+  updateSEOScore()
+  document.addEventListener('keydown', function _ks(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); saveArticle() }
+  })
+  setupAutosave()
 }
+
+// ── TOC GENERATOR ──
+function buildTOC(container) {
+  const headings = (container || document.getElementById('editorBody'))
+    ?.querySelectorAll('h2, h3') || []
+  return Array.from(headings).map((h, i) => {
+    const id = 'heading-' + i
+    h.id = id
+    return { tag: h.tagName.toLowerCase(), text: h.textContent.trim(), id }
+  })
+}
+
+function renderTOCPreviews() {
+  const toc = buildTOC()
+  const count = toc.length
+  const inPanel = document.getElementById('tocPreviewPanel')
+  const inList  = document.getElementById('tocPreviewList')
+  const inCnt   = document.getElementById('tocItemCount')
+  const sidePanel = document.getElementById('tocSidePanel')
+  const sideList  = document.getElementById('tocSideList')
+  const sideCnt   = document.getElementById('tocSideCount')
+  const eStat     = document.getElementById('eTOCCount')
+  if (count === 0) {
+    if (inPanel)   inPanel.style.display = 'none'
+    if (sidePanel) sidePanel.style.display = 'none'
+    if (eStat) eStat.textContent = ''
+    return
+  }
+  const listHTML = toc.map(item => `
+    <div class="toc-preview-item ${item.tag}">
+      <span style="color:var(--accent3)">${item.tag === 'h2' ? '■' : '○'}</span>
+      <span>${x(item.text)}</span>
+    </div>`).join('')
+  if (inPanel)   { inPanel.style.display = 'block'; inList.innerHTML = listHTML; inCnt.textContent = count + ' آیتم' }
+  if (sidePanel) { sidePanel.style.display = 'block'; sideList.innerHTML = listHTML; sideCnt.textContent = count }
+  if (eStat)     { eStat.textContent = '📑 ' + count + ' سرتیتر'; eStat.className = 'stat-good' }
+}
+
+function generateTOCHtml() {
+  const toc = buildTOC()
+  if (!toc.length) { toast('ابتدا H2 یا H3 در متن اضافه کنید', 'err'); return null }
+  const items = toc.map(item =>
+    `<li class="${item.tag}">
+      <a href="#${item.id}">${item.text}</a>
+    </li>`
+  ).join('')
+  return `<nav class="article-toc">
+    <div class="toc-toggle-header" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.toc-toggle-arrow').classList.toggle('open')">
+      <div class="toc-toggle-title">📑 فهرست مطالب</div>
+      <span class="toc-toggle-arrow open">▾</span>
+    </div>
+    <div class="toc-body open">
+      <ol>${items}</ol>
+    </div>
+  </nav><p><br></p>`
+}
+
+// ── EDITOR HELPERS ──
+function execCmd2(cmd, val = null) {
+  document.getElementById('editorBody').focus()
+  document.execCommand(cmd, false, val)
+  onEditorInput()
+}
+
+function insertBlock(type) {
+  const body = document.getElementById('editorBody')
+  body.focus()
+  let html = ''
+  switch(type) {
+    case 'quote':       html = `<blockquote>نقل‌قول را اینجا بنویسید...</blockquote><p><br></p>`; break
+    case 'code-inline': html = `<code>کد</code>`; break
+    case 'code-block':  html = `<pre>// کد خود را اینجا بنویسید\nconsole.log('Hello')</pre><p><br></p>`; break
+    case 'hr':          html = `<hr><p><br></p>`; break
+    case 'info':    html = `<div class="info-box">ℹ️ اطلاعیه: متن خود را اینجا بنویسید...</div><p><br></p>`; break
+    case 'warn':    html = `<div class="warn-box">⚠️ هشدار: متن خود را اینجا بنویسید...</div><p><br></p>`; break
+    case 'success': html = `<div class="success-box">✅ نکته: متن خود را اینجا بنویسید...</div><p><br></p>`; break
+    case 'table':
+      html = `<table><tr><th>ستون ۱</th><th>ستون ۲</th><th>ستون ۳</th></tr>
+        <tr><td>ردیف ۱</td><td>مقدار</td><td>مقدار</td></tr>
+        <tr><td>ردیف ۲</td><td>مقدار</td><td>مقدار</td></tr></table><p><br></p>`; break
+    case 'toc': { const tocHtml = generateTOCHtml(); if (!tocHtml) return; html = tocHtml; break }
+    case 'ad': html = `<div id="pos-article-display-card-116213"></div><p><br></p>`; break
+  }
+  document.execCommand('insertHTML', false, html)
+  onEditorInput()
+}
+
+function clearEditorFormatting() {
+  document.execCommand('removeFormat')
+  document.execCommand('unlink')
+  onEditorInput()
+}
+
+function openInlineImageModal() {
+  const url = prompt('آدرس تصویر را وارد کنید:')
+  if (!url) return
+  const caption = prompt('کپشن تصویر (اختیاری):') || ''
+  const html = `<figure class="img-with-caption">
+    <img src="${url}" alt="${caption}" style="max-width:100%;border-radius:8px;border:1px solid rgba(255,255,255,.1)">
+    ${caption ? `<figcaption>${caption}</figcaption>` : ''}
+  </figure><p><br></p>`
+  document.getElementById('editorBody').focus()
+  document.execCommand('insertHTML', false, html)
+  onEditorInput()
+}
+
+function setEditorMode(mode) {
+  window._editorMode = mode
+  const wrap = document.getElementById('editorProWrap')
+  const writePanel = document.getElementById('writePanelWrap')
+  const previewPanel = document.getElementById('previewPanelWrap')
+  const toolbar = document.getElementById('editorToolbar')
+  document.getElementById('modeWrite').classList.toggle('active', mode === 'write')
+  document.getElementById('modeSplit').classList.toggle('active', mode === 'split')
+  document.getElementById('modePreview').classList.toggle('active', mode === 'preview')
+  if (mode === 'write') {
+    wrap.classList.remove('split-view')
+    writePanel.style.display = 'flex'; writePanel.style.flex = '1'
+    previewPanel.style.display = 'none'
+    toolbar.style.display = 'flex'
+  } else if (mode === 'split') {
+    wrap.classList.add('split-view')
+    writePanel.style.display = 'flex'; writePanel.style.flex = '1'
+    previewPanel.style.display = 'block'; previewPanel.style.flex = '1'
+    toolbar.style.display = 'flex'
+    updatePreview()
+  } else {
+    wrap.classList.remove('split-view')
+    writePanel.style.display = 'none'
+    previewPanel.style.display = 'block'; previewPanel.style.flex = '1'
+    toolbar.style.display = 'none'
+    updatePreview()
+  }
+}
+
+function updatePreview() {
+  const body = document.getElementById('editorBody')
+  const prev = document.getElementById('previewBody')
+  if (!prev || !body) return
+  prev.innerHTML = body.innerHTML
+}
+
+function onEditorInput() {
+  const body = document.getElementById('editorBody')
+  if (!body) return
+  const text = body.innerText || ''
+  const words = text.trim().split(/\s+/).filter(w => w).length
+  const chars = text.length
+  const readMin = Math.max(1, Math.ceil(words / 200))
+  const eW = document.getElementById('eWords')
+  const eR = document.getElementById('eReadTime')
+  const eC = document.getElementById('eChars')
+  if (eW) eW.textContent = words + ' کلمه'
+  if (eR) { eR.textContent = '⏱ ' + readMin + ' دقیقه'; eR.className = words > 300 ? 'stat-good' : 'stat-warn' }
+  if (eC) eC.textContent = chars + ' کاراکتر'
+  renderTOCPreviews()
+  if (window._editorMode === 'split') updatePreview()
+  updateSEOScore()
+  triggerAutosave()
+}
+
+function updateSEOScore() {
+  const title = document.getElementById('fTitle')?.value || ''
+  const desc  = document.getElementById('fShort')?.value || ''
+  const body  = document.getElementById('editorBody')?.innerText || ''
+  const image = document.getElementById('fImageFinal')?.value || document.getElementById('fImageUrl')?.value || ''
+  const metaLenEl = document.getElementById('metaLen')
+  if (metaLenEl) {
+    metaLenEl.textContent = desc.length + ' کاراکتر'
+    metaLenEl.style.color = (desc.length >= 120 && desc.length <= 156) ? 'var(--accent3)' : desc.length > 156 ? 'var(--red)' : 'var(--text3)'
+  }
+  const checks = [
+    { label: 'عنوان وجود دارد', pass: title.length > 0 },
+    { label: 'عنوان ۳۰–۶۰ کاراکتر', pass: title.length >= 30 && title.length <= 60, warn: title.length > 0 && title.length < 20 },
+    { label: 'توضیح متا وجود دارد', pass: desc.length > 0 },
+    { label: 'توضیح ۱۲۰–۱۵۶ کاراکتر', pass: desc.length >= 120 && desc.length <= 156, warn: desc.length > 0 && desc.length < 100 },
+    { label: 'تصویر شاخص دارد', pass: !!image },
+    { label: 'محتوا بیش از ۳۰۰ کلمه', pass: body.trim().split(/\s+/).filter(w=>w).length >= 300 },
+    { label: 'محتوا بیش از ۶۰۰ کلمه', pass: body.trim().split(/\s+/).filter(w=>w).length >= 600 },
+    { label: 'H2 یا H3 در متن دارد', pass: !!document.getElementById('editorBody')?.querySelector('h2,h3') },
+    { label: 'لینک در متن وجود دارد', pass: !!document.getElementById('editorBody')?.querySelector('a') },
+    { label: 'تصویر در متن دارد', pass: !!document.getElementById('editorBody')?.querySelector('img') },
+  ]
+  const passed = checks.filter(c => c.pass).length
+  const score = Math.round((passed / checks.length) * 100)
+  const badge = document.getElementById('seoBadge')
+  const checksEl = document.getElementById('seoChecks')
+  if (badge) {
+    badge.textContent = score + '/۱۰۰'
+    badge.className = 'seo-score-badge ' + (score >= 70 ? 'good' : score >= 40 ? 'ok' : 'bad')
+  }
+  if (checksEl) {
+    checksEl.innerHTML = checks.map(c => {
+      const cls = c.pass ? 'pass' : (c.warn ? 'warn' : 'fail')
+      return `<div class="seo-check ${cls}"><span class="icon"></span><span>${c.label}</span></div>`
+    }).join('')
+  }
+}
+
+function setupAutosave() {
+  const editId = document.getElementById('editId')?.value
+  const draftKey = 'draft_' + (editId || 'new')
+  if (!editId) {
+    try {
+      const draft = localStorage.getItem(draftKey)
+      if (draft) {
+        const d = JSON.parse(draft)
+        if (d.content && confirm('پیش‌نویس ذخیره‌شده پیدا شد. بارگذاری شود؟')) {
+          document.getElementById('editorBody').innerHTML = d.content
+          if (d.title) document.getElementById('fTitle').value = d.title
+          if (d.short) document.getElementById('fShort').value = d.short
+          onEditorInput()
+          toast('پیش‌نویس بارگذاری شد ✓', 'ok')
+        }
+      }
+    } catch(e) {}
+  }
+}
+
+function triggerAutosave() {
+  clearTimeout(window._autoSaveTimer)
+  const dot = document.getElementById('autoSaveDot')
+  const txt = document.getElementById('autoSaveText')
+  if (dot) dot.className = 'autosave-dot saving'
+  if (txt) txt.textContent = 'در حال ذخیره...'
+  window._autoSaveTimer = setTimeout(() => {
+    const editId = document.getElementById('editId')?.value
+    const draftKey = 'draft_' + (editId || 'new')
+    try {
+      localStorage.setItem(draftKey, JSON.stringify({
+        content: document.getElementById('editorBody')?.innerHTML || '',
+        title: document.getElementById('fTitle')?.value || '',
+        short: document.getElementById('fShort')?.value || '',
+        ts: Date.now()
+      }))
+    } catch(e) {}
+    if (dot) { dot.className = 'autosave-dot saved'; setTimeout(() => { if(dot) dot.className='autosave-dot' }, 2500) }
+    if (txt) { txt.textContent = 'ذخیره خودکار ✓'; setTimeout(() => { if(txt) txt.textContent='آماده' }, 2500) }
+  }, 1500)
+}
+
+function slugify(str) {
+  return (str||'').trim().replace(/\s+/g, '-').replace(/[^\u0600-\u06FFa-zA-Z0-9\-]/g, '').substring(0, 60)
+}
+
+function onTitleInput(val) {
+  const sl = document.getElementById('slugVal')
+  if (sl) sl.textContent = slugify(val) || 'عنوان-مقاله'
+  updateSEOScore()
+}
+
+function renderTags() {
+  const chips = document.getElementById('tagChips')
+  if (!chips) return
+  chips.innerHTML = (window._articleTags || []).map(tag =>
+    `<span class="tag-chip">${x(tag)}<span class="del" onclick="removeTag('${x(tag)}')">×</span></span>`
+  ).join('')
+  const fi = document.getElementById('fTags')
+  if (fi) fi.value = (window._articleTags || []).join(',')
+}
+
+function handleTagInput(e) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault()
+    const val = e.target.value.trim().replace(/,/g,'')
+    if (!val) return
+    if (!window._articleTags) window._articleTags = []
+    if (!window._articleTags.includes(val)) { window._articleTags.push(val); renderTags() }
+    e.target.value = ''
+  } else if (e.key === 'Backspace' && !e.target.value && window._articleTags?.length) {
+    window._articleTags.pop(); renderTags()
+  }
+}
+
+function removeTag(tag) { window._articleTags = (window._articleTags || []).filter(t => t !== tag); renderTags() }
+
+function toggleSection(id) {
+  const body = document.getElementById(id)
+  const toggle = document.getElementById('toggle-' + id)
+  if (!body) return
+  const isOpen = body.style.display !== 'none'
+  body.style.display = isOpen ? 'none' : ''
+  if (toggle) toggle.classList.toggle('open', !isOpen)
+}
+
 
 async function editArticle(id) {
   const { data: a } = await sb.from('articles').select('*').eq('id', id).single()
@@ -2148,6 +3743,7 @@ async function saveArticle() {
   const short   = document.getElementById('fShort')?.value.trim()
   const content = document.getElementById('editorBody')?.innerHTML.trim()
   const cat     = document.getElementById('fCat')?.value
+  const tags    = document.getElementById('fTags')?.value || ''
   const editId  = document.getElementById('editId')?.value
   const errEl   = document.getElementById('formErr')
   const okEl    = document.getElementById('formOk')
@@ -2167,6 +3763,9 @@ async function saveArticle() {
     if (error.message.includes('policy')) msg = '⚠️ دسترسی رد شد — لاگین هستی؟'
     showAlert(errEl, msg); return
   }
+  // Clear draft
+  const draftKey = 'draft_' + (editId || 'new')
+  try { localStorage.removeItem(draftKey) } catch(e) {}
   showAlert(okEl, editId ? '✅ مقاله ویرایش شد' : '✅ مقاله اضافه شد')
   toast(editId ? 'مقاله ویرایش شد ✓' : 'مقاله اضافه شد ✓', 'ok')
   setTimeout(() => showAdminPanel('articles'), 1000)
@@ -2426,12 +4025,15 @@ function errHtml(msg) {
 // ══════════════════════════════════════════
 window.addEventListener('scroll', () => {
   document.getElementById('hdr').classList.toggle('scrolled', window.scrollY > 10)
-})
+  const btt = document.getElementById('backToTop')
+  if (btt) btt.classList.toggle('show', window.scrollY > 400)
+}, { passive: true })
 
 // ══════════════════════════════════════════
 //  START
 // ══════════════════════════════════════════
 applySiteSettings()
+loadTheme()
 if (!checkDeepLink()) loadArticles()
 loadSlider()
 </script>
