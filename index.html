@@ -2210,14 +2210,14 @@
     <div class="logo" onclick="go('home')">
       <div class="logo-mark">💰</div>
       <div class="logo-text">
-        <div class="logo-name" id="siteNameDisplay">درآمد نو</div>
-        <div class="logo-sub" id="siteDescDisplay">مقالات کسب درآمد</div>
+        <div class="logo-name" id="siteNameDisplay">بلاگ یار</div>
+        <div class="logo-sub" id="siteDescDisplay">مقالات </div>
       </div>
     </div>
     <nav class="hdr-nav">
       <button class="nav-link" onclick="go('home')">🏠 خانه</button>
       <button id="themeToggle" onclick="toggleTheme()" title="تغییر تم">🌙</button>
-      <button class="nav-link primary" onclick="go('admin')">⚙ مدیریت</button>
+      <button class="nav-link primary" onclick="go('admin')">⚙مدیر</button>
     </nav>
   </div>
 </header>
@@ -2399,7 +2399,7 @@ function getSiteSettings() {
       accentColor: '#22c55e',
       footerText: 'ساخته شده با ❤️ | درآمد نو'
     }
-  } catch { return { siteName:'درآمد نو', siteDesc:'مقالات کسب درآمد', accentColor:'#22c55e', footerText:'ساخته شده با ❤️' } }
+  } catch { return { siteName:"بلاگ یار", siteDesc:'مقالات', accentColor:'#22c55e', footerText:'ساخته شده با ❤️' } }
 }
 function saveSiteSettings(s) { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)) }
 function applySiteSettings() {
